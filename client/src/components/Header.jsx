@@ -1,7 +1,8 @@
 import { PiEyeglassesBold } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
-import { LuShoppingCart } from "react-icons/lu";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import { Link } from "react-router-dom";
+
 
 export default function Header() {
   return (
@@ -15,10 +16,10 @@ export default function Header() {
           </div>
         </div>
         <div className="flex flex-col items-center md:flex-row gap-4">
-          <Link>Home</Link>
-          <Link>Shop</Link>
-          <Link>Featured</Link>
-          <Link>Recommended</Link>
+          <Link to="/">Home</Link>
+          <Link to="/shop">Shop</Link>
+          <Link to="/featured">Featured</Link>
+          <Link to="/recommended">Recommended</Link>
         </div>
       </div>
 
@@ -31,14 +32,20 @@ export default function Header() {
             className="bg-transparent focus:outline-none w-full"
           />
         </form>
-        <div className=" flex items-center w-16 h-18">
-          <LuShoppingCart />
+        <div className=" flex items-center w-10 h-10">
+          <MdOutlineShoppingBag className="w-16 h-16"/>
         </div>
         <div className="flex gap-2">
-          <Link to="/sign-up" className="bg-slate-950 uppercase rounded-lg border text-white p-3 hover:opacity-95">
+          <Link
+            to="/sign-up"
+            className="bg-slate-950 uppercase rounded-lg border text-white p-3 hover:opacity-95"
+          >
             signup
           </Link>
-          <Link to="/sign-in" className="bg-slate-200 text-black uppercase border rounded-lg p-3 hover:opacity-95">
+          <Link
+            to="/sign-in"
+            className="bg-slate-200 text-black uppercase border rounded-lg p-3 hover:opacity-95"
+          >
             sigin
           </Link>
         </div>

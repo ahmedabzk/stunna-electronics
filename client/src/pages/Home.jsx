@@ -1,9 +1,12 @@
+import Footer from "../components/Footer";
 
 
 function Home() {
   return (
-    <div>Home</div>
-  )
+    <section>
+      <Footer />
+    </section>
+  );
 }
 
 export default Home

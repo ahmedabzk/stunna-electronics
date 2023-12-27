@@ -9,11 +9,13 @@ export default function Header() {
     <header className="flex justify-between items-center mt-5 gap-4 m-2">
       <div className="flex gap-4 ml-7">
         <div className="flex flex-col items-center md:flex-row">
-          <PiEyeglassesBold className="w-16 h-16" />
-          <div>
-            <h1 className="font-semibold uppercase">stunna</h1>
-            <span className="font-thin text-black">eyewear</span>
-          </div>
+          <Link to="/">
+            <PiEyeglassesBold className="w-16 h-16" />
+            <div>
+              <h1 className="font-semibold uppercase">stunna</h1>
+              <span className="font-thin text-black">eyewear</span>
+            </div>
+          </Link>
         </div>
         <div className="flex flex-col items-center md:flex-row gap-4">
           <Link to="/">Home</Link>
@@ -33,7 +35,7 @@ export default function Header() {
           />
         </form>
         <div className=" flex items-center w-10 h-10">
-          <MdOutlineShoppingBag className="w-16 h-16"/>
+          <MdOutlineShoppingBag className="w-16 h-16">{0}</MdOutlineShoppingBag>
         </div>
         <div className="flex gap-2">
           <Link

@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import Header from "./components/Header.jsx";
-import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword} from "./pages";
+import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, Item} from "./pages";
 import Footer from "./components/Footer.jsx";
 
 const queryClient = new QueryClient();
@@ -16,7 +16,10 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/featured" element={<Featured/>} />
+        <Route path="/featured" element={<Featured />} />
+        <Route path="/recommended" element={<Recommended />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/item/:itemId" element={<Item/>} />
       </Routes>
     </QueryClientProvider>
   );

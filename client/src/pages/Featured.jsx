@@ -18,9 +18,11 @@ function Featured() {
   }
   return (
     <section className="mt-12 max-w-[1600px] mx-auto flex flex-col items-center md:items-start gap-6">
-      <div className="bg-[#F3F3F3] w-full">
+      <div className="bg-[#F3F3F3] w-full shadow-lg">
         <div className="flex items-center justify-between ml-7">
-          <h1 className="text-2xl font-bold">Featured Products</h1>
+          <h1 className="text-2xl font-bold text-slate-500">
+            Featured Products
+          </h1>
           <img
             src="https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/13/733396/2.jpg?2688"
             className="w-[300px] h-[250px]"

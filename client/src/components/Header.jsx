@@ -1,12 +1,36 @@
 import { PiEyeglassesBold } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineShoppingBag } from "react-icons/md";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import CartProgressContext from "../context/CartProgress";
+import CartContext from "../context/CartContext";
+import { useContext } from "react";
+import Cart from "./Cart";
+import { UserContext } from "../context/UserContext";
 
 export default function Header() {
+  const cartCtx = useContext(CartContext);
+  const cartProgress = useContext(CartProgressContext);
+  const userCtx = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const cartItem = cartCtx.products.length;
+
+
+  const handleShowCart = () => {
+    cartProgress.setIsCartOpen(true);
+  }
+
+  const handleLogout = () => {
+    userCtx.logout();
+    navigate('/');
+  };
+
+
+
   return (
-    <header className="flex justify-between items-center mt-5 gap-4 m-2">
+    <header className="flex justify-between items-center mt-5 gap-4 m-2 z-0">
       <div className="flex gap-4 ml-7">
         <div className="flex flex-col items-center md:flex-row">
           <Link to="/">
@@ -34,24 +58,48 @@ export default function Header() {
             className="bg-transparent focus:outline-none w-full"
           />
         </form>
-        <div className=" flex items-center w-10 h-10">
-          <MdOutlineShoppingBag className="w-16 h-16">{0}</MdOutlineShoppingBag>
-        </div>
-        <div className="flex gap-2">
-          <Link
-            to="/sign-up"
-            className="bg-slate-950 uppercase rounded-lg border text-white p-3 hover:opacity-95"
-          >
-            signup
-          </Link>
-          <Link
-            to="/sign-in"
-            className="bg-slate-200 text-black uppercase border rounded-lg p-3 hover:opacity-95"
-          >
-            sigin
-          </Link>
-        </div>
+        <button
+          onClick={handleShowCart}
+          className=" flex flex-col items-center w-12 h-12"
+        >
+          <p className="text-red-700 text-sm absolute mt-4">{cartItem}</p>
+          <MdOutlineShoppingBag className="w-16 h-16" />
+        </button>
+        {userCtx.current_user ? (
+          <div className="flex gap-2">
+            <Link to={"/profile"}>
+              <img src={userCtx.current_user.imageUrl} className="rounded-full w-9 h-9 object-cover"/>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="border p-2 rounded-md bg-slate-100 hover:bg-slate-700 hover:text-white"
+            >
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <Link
+              to="/sign-up"
+              className="bg-slate-950 uppercase rounded-lg border text-white p-3 hover:opacity-95"
+            >
+              Signup
+            </Link>
+            <Link
+              to="/sign-in"
+              className="bg-slate-200 text-black uppercase border rounded-lg p-3 hover:opacity-95"
+            >
+              Sigin
+            </Link>
+          </div>
+        )}
       </div>
+      {cartProgress.isCartOpen && <Cart />}
     </header>
   );
 }
+
+
+         
+         
+         

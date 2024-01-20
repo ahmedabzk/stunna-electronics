@@ -1,13 +1,49 @@
 import { FaGoogle } from "react-icons/fa";
 import { IoLogoFacebook } from "react-icons/io";
 import { BsGithub } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+
+import { fetchLogin } from '../utils/http';
+
+import { UserContext } from "../context/UserContext";
+import { useMutation } from "@tanstack/react-query";
 
 function SignIn() {
+  const [formData, setFormData] = useState({});
+  const userCtx = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const { mutate, data, isError, error} = useMutation({
+    mutationFn: fetchLogin,
+    mutationKey: ['login'],
+    onSuccess: (data) => {
+      userCtx.login(data);
+      navigate('/');
+    }
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    })
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutate(formData);
+  
+  }
+
+
+  console.log(userCtx.current_user);
+
   return (
-    <section className="max-w-4xl mx-auto mt-16 flex flex-col justify-center items-center border border-slate-500">
+    <section className="max-w-4xl mx-auto mt-16 flex flex-col justify-center items-center shadow-2xl">
       <div className="flex flex-col items-center m-5 mt-20 max-w-3xl mx-auto gap-4 sm:flex-row">
-        <form className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <h1 className="text-xl font-bold ">Sign in to stunna eyewear</h1>
           <label className=" text-slate-600 text-sm">email</label>
           <input
@@ -15,6 +51,8 @@ function SignIn() {
             id="email"
             placeholder="test@example.com"
             className="p-2 border rounded-lg"
+            required
+            onChange={handleChange}
           />
           <label className=" text-slate-600 text-sm">password</label>
           <input
@@ -22,13 +60,21 @@ function SignIn() {
             id="password"
             placeholder="Your password"
             className="p-2 border rounded-lg"
+            required
+            onChange={handleChange}
           />
           <div className="text-sm flex flex-col sm:flex-row items-center gap-4">
-            <Link to="/forget-password" className="hover:cursor-pointer underline">forget password</Link>
-            <button type="button" className="w-full sm:w-fit border rounded-lg bg-slate-800 text-white p-2 text-center ">
-              Sign Up
+            <Link
+              to="/forget-password"
+              className="hover:cursor-pointer underline"
+            >
+              forget password
+            </Link>
+            <button className="w-full sm:w-fit border rounded-lg bg-slate-800 text-white p-2 text-center ">
+              Sign in
             </button>
           </div>
+          {isError && <p className="text-red-500">{error.info?.message}</p>}
         </form>
         <div>
           <p className="text-sm">OR</p>
@@ -48,7 +94,7 @@ function SignIn() {
           </Link>
         </div>
       </div>
-      <div className="flex justify-center items-center border border-slate-500 p-3 gap-5 w-full mt-0">
+      <div className="flex justify-center items-center p-3 gap-5 w-full mt-0">
         <p>Already have an account</p>
         <Link to="/sign-up" className=" p-2 hover:bg-black hover:text-white">
           Sign Up

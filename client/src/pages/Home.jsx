@@ -17,7 +17,7 @@ function Home() {
   });
 
   if (featuredItems.isPending && recommendedItems.isPending) {
-    return <p>Loading items ...</p>;
+    return <p className="text-center">Loading Products ...</p>;
   }
   if (featuredItems.isError && recommendedItems.isError) {
     return (
@@ -30,7 +30,7 @@ function Home() {
 
   return (
     <section className="mt-12 max-w-[1600px] mx-auto flex flex-col items-center md:items-start gap-12">
-      <div className="bg-[#F3F3F3] w-full flex flex-col md:flex-row items-center gap-4">
+      <div className="bg-[#F3F3F3] w-full flex flex-col md:flex-row items-center gap-4 shadow-lg">
         <div className="ml-5 flex flex-col gap-4">
           <h1 className="text-xl">
             <span className="font-bold">See</span> everything with{" "}
@@ -38,12 +38,12 @@ function Home() {
           </h1>
           <p className="">
             Buying eyewear should leave you happy and good-looking, with money
-            in your pocket. Glasses, sunglasses, and contacts we've got your
-            eyes covered.
+            in your pocket. Glasses, sunglasses, and contacts we&apos;ve got
+            your eyes covered.
           </p>
           <Link
             to="/shop"
-            className="bg-black text-white border rounded-sm p-3 w-fit"
+            className="bg-black text-white border rounded-sm p-3 w-fit hover:shadow-lg"
           >
             Shop Now
           </Link>

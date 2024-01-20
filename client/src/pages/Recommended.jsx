@@ -18,9 +18,9 @@ function Recommended() {
   }
 
   return (
-    <section className="mt-12 max-w-[1600px] mx-auto flex flex-col items-center md:items-start gap-4">
-      <div className="w-full bg-[#F3F3F3] flex justify-between items-center">
-        <h1 className="ml-7 font-bold text-xl">Recommended Products</h1>
+    <section className="mt-12 max-w-[1600px] mx-auto flex flex-col items-center md:items-start gap-10">
+      <div className="w-full bg-[#F3F3F3] flex justify-between items-center shadow-lg">
+        <h1 className="ml-7 font-bold text-xl text-slate-500">Recommended Products</h1>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmxeRNkwwwJeuMzq6LXg59ExSTXUX8kXfV46m0z4pemgF3sXJqPJoeeWnVohZ26bIyM1Y&usqp=CAU" />
       </div>
       <Card data={data} />

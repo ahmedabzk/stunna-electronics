@@ -5,7 +5,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import authRouter from "./routes/auth.routes.js";
-import itemRouter from "./routes/item.routes.js";
+import productRouter from "./routes/product.routes.js";
+import userRouter from "./routes/users.routes.js";
 
 dotenv.config();
 
@@ -32,7 +33,8 @@ app.use(
 );
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/item", itemRouter);
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/user", userRouter);
 
 app.use(express.static(path.join(__dirname, "client/dist")));
 app.get("*", (req, res) => {

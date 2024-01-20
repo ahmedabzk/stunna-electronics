@@ -1,15 +1,16 @@
 import { Routes, Route } from "react-router-dom";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
 
 import Header from "./components/Header.jsx";
-import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, Item} from "./pages";
-import Footer from "./components/Footer.jsx";
+import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, Order, Product, CheckOut, Payment, Profile } from "./pages";
 
-const queryClient = new QueryClient();
+import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
+
+
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,9 +20,15 @@ function App() {
         <Route path="/featured" element={<Featured />} />
         <Route path="/recommended" element={<Recommended />} />
         <Route path="/shop" element={<Shop />} />
-        <Route path="/item/:itemId" element={<Item/>} />
+        <Route path="/product/:productId" element={<Product />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/checkout/step1" element={<CheckOut />} />
+          <Route path="/checkout/step2" element={<Order />} />
+          <Route path="/checkout/step3" element={<Payment />} />
+        </Route>
       </Routes>
-    </QueryClientProvider>
+    </>
   );
 }
 

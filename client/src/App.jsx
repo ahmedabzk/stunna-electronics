@@ -5,6 +5,9 @@ import Header from "./components/Header.jsx";
 import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, Order, Product, CheckOut, Payment, Profile } from "./pages";
 
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
+import EditAccount from "./components/EditAccount.jsx";
+import MyOrders from "./components/MyOrders.jsx";
+import WishList from "./components/WishList.jsx";
 
 
 
@@ -22,7 +25,10 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit-account" element={<EditAccount />} />
+          <Route path="/profile/my-orders" element={<MyOrders />} />
+          <Route path="/profile/wish-list" element={<WishList />} />
           <Route path="/checkout/step1" element={<CheckOut />} />
           <Route path="/checkout/step2" element={<Order />} />
           <Route path="/checkout/step3" element={<Payment />} />

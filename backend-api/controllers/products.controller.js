@@ -15,8 +15,6 @@ export const createProduct = async (req, res, next) => {
 export const getFeaturedProducts = async (req, res, next) => {
 
     try {
-        // const feature = true;
-        // const products = await Product.find({ featured: true});
         const products = await Product.find({ featured: true });
         return res.status(200).json(products);
     } catch (err) {

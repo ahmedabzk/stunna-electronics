@@ -2,7 +2,7 @@ import { FaGoogle } from "react-icons/fa";
 import { IoLogoFacebook } from "react-icons/io";
 import { BsGithub } from "react-icons/bs";
 import { Link,useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { fetchLogin } from '../utils/http';
 
@@ -15,14 +15,17 @@ function SignIn() {
 
   const navigate = useNavigate();
 
-  const { mutate, data, isError, error} = useMutation({
+  const { mutate, data, isError, error,status} = useMutation({
     mutationFn: fetchLogin,
-    mutationKey: ['login'],
+    mutationKey: ['user'],
     onSuccess: (data) => {
       userCtx.login(data);
-      navigate('/');
+
+      const destination = data.role === 'admin' ? "/admin" : "/";
+      navigate(destination);
     }
   });
+
 
   const handleChange = (e) => {
     setFormData({
@@ -36,9 +39,6 @@ function SignIn() {
     mutate(formData);
   
   }
-
-
-  console.log(userCtx.current_user);
 
   return (
     <section className="max-w-4xl mx-auto mt-16 flex flex-col justify-center items-center shadow-2xl">
@@ -70,8 +70,8 @@ function SignIn() {
             >
               forget password
             </Link>
-            <button className="w-full sm:w-fit border rounded-lg bg-slate-800 text-white p-2 text-center ">
-              Sign in
+            <button disabled={status === "pending"} className="w-full sm:w-fit border rounded-lg bg-slate-800 text-white p-2 text-center ">
+              {status === "pending" ? "loading.." :"Sign in"}
             </button>
           </div>
           {isError && <p className="text-red-500">{error.info?.message}</p>}

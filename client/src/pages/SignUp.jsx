@@ -18,8 +18,9 @@ function SignUp() {
 
 
 
-  const {mutate, isError,data, isPending, error} = useMutation({
+  const {mutate, isError,status, error} = useMutation({
     mutationFn: register,
+    mutationKey: ['user'],
     onSuccess: () => {
       navigate('/sign-in');
     }
@@ -82,12 +83,11 @@ function SignUp() {
             onChange={handleOnChange}
           /> */}
           <button
-          disabled={disableButton}
+          disabled={status === "pending" || disableButton}
             className="w-full border rounded-lg bg-slate-800 text-white p-2 text-center disabled:cursor-not-allowed"
           >
-            Sign Up
+            {status ==="pending" ? "loading...":"Sign Up"}
           </button>
-          <p>helloooooo</p>
           {isError && <p className="text-red-400">{error.info?.message}</p>}
         </form>
         <div>

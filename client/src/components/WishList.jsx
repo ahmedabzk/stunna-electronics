@@ -1,20 +1,21 @@
 import { Link } from "react-router-dom";
 
 function WishList() {
+
   return (
     <div className="max-w-3xl mx-auto flex flex-col items-center md:w-[60rem] h-[40rem] shadow-lg ">
       <div className="bg-[#F4F4F4] w-full p-3 flex justify-around">
-        <Link to={"/profile"} className="border hover:bg-[#F9F9F9] p-3 ">
+        <Link to="/profile" className="border hover:bg-[#F9F9F9] p-3 ">
           Account
         </Link>
         <Link
-          to={"/profile/wish-list"}
+          to="/profile/wish-list"
           className="border hover:bg-[#F9F9F9] p-3"
         >
           My Wish List
         </Link>
         <Link
-          to={"/profile/my-orders"}
+          to="/profile/my-orders"
           className="border hover:bg-[#F9F9F9] p-3"
         >
           My Orders

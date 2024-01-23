@@ -6,7 +6,7 @@ import bcryptjs from "bcryptjs";
 import JWT from "jsonwebtoken";
 
 export const signUp = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email,role, password } = req.body;
   // check if email already exists in the database
   const userEmail = await User.findOne({ email: email });
   if (userEmail) {
@@ -15,7 +15,7 @@ export const signUp = async (req, res, next) => {
 
   // hash the password
   const hashedPass = bcryptjs.hashSync(password, 10);
-  const newUser = await User({ name, email, password: hashedPass });
+  const newUser = await User({ name, email,role, password: hashedPass });
   try {
     await newUser.save();
     res.status(201).json("user created successfully");

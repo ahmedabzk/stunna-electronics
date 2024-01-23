@@ -1,6 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import ReactDOM from 'react-dom/client';
+
+import { ProSidebarProvider } from "react-pro-sidebar";
+
 import { QueryClientProvider} from "@tanstack/react-query";
 import App from './App.jsx';
 import { queryClient } from './utils/http.js';
@@ -14,7 +16,7 @@ import { UserContextProvider } from './context/UserContext.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <ProSidebarProvider>
       <UserContextProvider>
         <CartContextProvider>
           <CartProgressContextProvider>
@@ -24,6 +26,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </CartProgressContextProvider>
         </CartContextProvider>
       </UserContextProvider>
-    </BrowserRouter>
+    </ProSidebarProvider>
   </React.StrictMode>
 );

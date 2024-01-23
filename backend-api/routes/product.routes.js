@@ -1,6 +1,7 @@
 import express from 'express';
 import { createProduct, getFeaturedProducts, getProductById, getRecommendedProducts, getAllProducts } from '../controllers/products.controller.js';
 
+
 const router = express.Router();
 
 router.post("/create", createProduct);

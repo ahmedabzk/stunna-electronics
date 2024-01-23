@@ -59,3 +59,27 @@ export const fetchLogin = async (formData) => {
   const data = await res.json();
   return data;
 };
+
+export const UpdateUserProfile = async (id, formData) => {
+  const res = await fetch(`http://localhost:3000/api/v1/user/update/${id}`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    credentials: "include",
+    body: JSON.stringify(formData)
+  });
+
+  if (!res.ok) {
+    const error = new Error("failed to update user profile");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const data = await res.json();
+
+  return data;
+
+
+}

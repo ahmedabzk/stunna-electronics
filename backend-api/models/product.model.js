@@ -13,7 +13,15 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    maxQuantity: {
+        type: Number,
+        required: true
+    },
     colors: {
+        type: Array,
+        required: true
+    },
+    sizes: {
         type: Array,
         required: true
     },

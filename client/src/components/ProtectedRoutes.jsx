@@ -7,7 +7,7 @@ import Modal from "./ModalWrapper";
 function ProtectedRoutes() {
     const userCtx = useContext(UserContext);
 
-    return userCtx.current_user ? (
+    return userCtx.current_user && userCtx.current_user.role === 'user' ? (
         <Outlet />
     ) : (
         <Modal open={true}>

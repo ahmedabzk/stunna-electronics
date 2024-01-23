@@ -13,7 +13,7 @@ export const getAllUsers = async (req, res, next) => {
 };
 
 export const getUserById = async (req, res, next) => {
-    const user = await User.findById(req.params);
+    const user = await User.findById(req.params.id);
     
     if (!user) {
         next(errorHandler(401, "User not found"));
@@ -38,14 +38,14 @@ export const updateUserById = async (req, res, next) => {
                     name: req.body.name,
                     email: req.body.email,
                     password: req.body.password,
-                    imageUrl: req.body.image
+                    imageUrl: req.body.imageUrl
                 }
             }, {
                 new: true
             });
 
-            const { pass: passwords, ...rest } = updatedUser._doc;
-            res.status(200).json(updatedUser);
+            const { password, ...rest } = updatedUser._doc;
+            res.status(200).json(rest);
         } catch (err) {
             next(err);
         }

@@ -13,6 +13,8 @@ export default function Header() {
   const cartProgress = useContext(CartProgressContext);
   const userCtx = useContext(UserContext);
 
+  console.log(userCtx.current_user);
+
   const navigate = useNavigate();
 
   const cartItem = cartCtx.products.length;
@@ -24,7 +26,7 @@ export default function Header() {
 
   const handleLogout = () => {
     userCtx.logout();
-    navigate('/');
+    navigate('/sign-in');
   };
 
 
@@ -98,8 +100,3 @@ export default function Header() {
     </header>
   );
 }
-
-
-         
-         
-         

@@ -30,7 +30,7 @@ function AdminSidebar() {
         <Menu>
           <MenuItem icon={<MenuRoundedIcon onClick={() => {
             collapseSidebar();
-          }} />} component={<Link to="/admin" />}>
+          }} />}>
             <h1>Admin</h1>
           </MenuItem>
           <MenuItem

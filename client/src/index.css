@@ -7,3 +7,16 @@ html,body,#root{
   width: 100%;
   height: 100%;
 }
+
+/* Remove up and down arrows on number input */
+ /* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+ 
+}
+
+/* Remove up and down arrows on Chrome and Safari */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

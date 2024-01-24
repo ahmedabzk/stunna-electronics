@@ -13,8 +13,7 @@ export const fetchData = async (url) => {
   }
 
   const products = await res.json();
-  // console.log(items);
-
+  
   return products;
 };
 

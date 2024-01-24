@@ -3,15 +3,6 @@ import Product from '../models/product.model.js';
 import errorHandler from '../errors/error.js';
 
 
-export const createProduct = async (req, res, next) => {
-    try {
-        const product = await Product.create(req.body);
-        return res.status(200).json(product);
-    } catch (err) {
-        next(err);
-    }
-}
-
 export const getFeaturedProducts = async (req, res, next) => {
 
     try {

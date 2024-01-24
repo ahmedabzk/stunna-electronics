@@ -3,28 +3,9 @@ import bcryptjs from "bcryptjs";
 import errorHandler from "../errors/error.js";
 import User from "../models/user.model.js"
 
-export const getAllUsers = async (req, res, next) => {
-    try {
-        const users = await User.find();
-        res.status(200).json(users);
-    } catch (e) {
-        next(e);
-    }
-};
 
-export const getUserById = async (req, res, next) => {
-    const user = await User.findById(req.params.id);
-    
-    if (!user) {
-        next(errorHandler(401, "User not found"));
-    }
 
-    try {
-        res.status(200).json(user);
-    } catch (err) {
-        next(err);
-    }
-};
+
 
 export const updateUserById = async (req, res, next) => {
     if (req.user.id === req.params.id) {
@@ -54,6 +35,3 @@ export const updateUserById = async (req, res, next) => {
     }
 }
 
-// export const deleteUser = (req, res, next) => {
-
-// }

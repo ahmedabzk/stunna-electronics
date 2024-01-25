@@ -7,7 +7,7 @@ function AdminRootLayout() {
     const userCtx = useContext(UserContext);
 
     return userCtx.current_user && userCtx.current_user.role === "admin" ? (
-      <div className="flex h-[100%]  gap-6">
+      <div className="flex h-[100%] w-[100%] gap-6">
         <AdminSidebar />
           <Outlet />
       </div>

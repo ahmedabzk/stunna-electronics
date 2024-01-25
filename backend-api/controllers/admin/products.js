@@ -22,3 +22,52 @@ export const getAll = async (req, res, next) => {
     next(err);
   }
 };
+
+export const productById = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return next(errorHandler(404, "Product not found"));
+    return res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateProductById = async (req, res, next) => {
+
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            brand: req.body.brand,
+            name: req.body.name,
+            description: req.body.description,
+            maxQuantity: req.body.maxQuantity,
+            colors: req.body.colors,
+            images: req.body.images,
+            featured: req.body.featured,
+            recommended: req.body.recommended,
+            price: req.body.maxQuantity,
+            sizes: req.body.sizes,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+
+      res.status(200).json(updatedProduct);
+    } catch (err) {
+      next(err);
+    }
+};
+
+export const deleteProduct = async (req, res, next) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json("product deleted successfully");
+  } catch (err) {
+    next(err);
+  }
+}

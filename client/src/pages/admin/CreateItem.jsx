@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "../../utils/http";
+import { queryClient,createProduct } from "../../utils/http";
 import {
   getDownloadURL,
   getStorage,
@@ -10,25 +10,9 @@ import { useState } from "react";
 import { app } from "../../firebase";
 
 
-const createProduct = async (formData) => {
-  const res = await fetch("http://localhost:3000/api/v1/admin/create/product", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  });
 
-  if (!res.ok) {
-    const error = new Error("failed to create user");
-    error.code = res.statusCode;
-    error.info = await res.json();
-    throw error;
-  }
 
-  const response = await res.json();
-  return response;
-};
+
 
 function CreateItem() {
   const [formData, setFormData] = useState({
@@ -48,7 +32,7 @@ function CreateItem() {
   const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState(false);
 
-  const {mutate, data, status, isError,error, isPending } = useMutation({
+  const {mutate,status, isError,error, isPending } = useMutation({
     mutationKey: ['products'],
     mutationFn: createProduct,
     onSuccess: () => {
@@ -127,6 +111,17 @@ function CreateItem() {
 
   };
 
+  const handleSizeChange = (e) => {
+    const sizeArray = e.target.value
+      .split(",")
+      .map((item) => item.trim())
+      .filter((item) => item !== "");
+    setFormData({
+      ...formData,
+      sizes: sizeArray,
+    });
+  };
+
   const handleRemove = (index) => {
     setFormData({
       ...formData,
@@ -138,10 +133,14 @@ function CreateItem() {
     e.preventDefault();
     if (formData.images.length < 1) return setImageUploadError("You must upload at least one image");
     mutate(formData);
+  };
+
+  if (isError) {
+    return <p>{error.info?.message}</p>
   }
 
   return (
-    <div className="w-full h-full mt-4 p-4">
+    <div className="w-full mt-1 p-4">
       <h1 className="text-slate-600 font-semibold text-center mb-2">
         Create Product
       </h1>
@@ -190,6 +189,14 @@ function CreateItem() {
               className="p-3 border rounded border-slate-400 w-[80%]"
               required
             />
+            <label className="text-slate-500 font-semibold">Sizes</label>
+            <input
+              type="text"
+              className="p-3 border rounded border-slate-400 w-[80%]"
+              required
+              onChange={handleSizeChange}
+              defaultValue={formData.sizes}
+            />
             <label className="text-slate-500 font-semibold">Featured</label>
             <input
               type="text"
@@ -219,7 +226,7 @@ function CreateItem() {
           </div>
         </div>
         <div className="flex-1">
-          <div className="flex flex-col items-center border border-slate-500 gap-8 h-full p-4">
+          <div className="flex flex-col items-center border border-slate-500 gap-8 p-4">
             <label className="text-slate-500 font-semibold">
               Upload at least one picture of the product
             </label>
@@ -244,7 +251,6 @@ function CreateItem() {
             {!loading && imageUploadError && (
               <p className="text-red-700">{imageUploadError}</p>
             )}
-          
 
             {formData.images.length > 0 &&
               formData.images.map((url, index) => (
@@ -267,10 +273,15 @@ function CreateItem() {
                 </div>
               ))}
           </div>
-          <button disabled={loading || isPending} className="p-3 bg-slate-800 text-white rounded-lg uppercase hover:opacity-95 disabled:cursor-not-allowed w-full mt-12">
-            {loading && isPending ? "creating...": "create"}
+          <button
+            disabled={loading || isPending}
+            className="p-3 bg-slate-800 text-white rounded-lg uppercase hover:opacity-95 disabled:cursor-not-allowed w-full mt-12"
+          >
+            {loading && isPending ? "creating..." : "create"}
           </button>
-          {status === 'success' && <p className="text-green-800">product created successfully</p>}
+          {status === "success" && (
+            <p className="text-green-800">product created successfully</p>
+          )}
         </div>
       </form>
     </div>

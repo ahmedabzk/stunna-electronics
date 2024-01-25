@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import CartContext from "../context/CartContext";
 import { formatter } from "../utils/formatter";
@@ -7,7 +7,7 @@ function Order() {
   const cartCtx = useContext(CartContext);
 
  
-
+  const navigate = useNavigate();
 
 
   const total = cartCtx.products.reduce((accumulator, product) => {
@@ -23,7 +23,10 @@ function Order() {
     })
   }
 
-    console.log(internationalShipping);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+    
+  // }
 
   return (
     <section className="flex flex-col justify-center items-center border max-w-3xl mx-auto gap-2 shadow-xl">
@@ -36,6 +39,7 @@ function Order() {
               type="text"
               className="border p-3 border-slate-400"
               required
+
             />
           </div>
           <div className="flex flex-col items-center">
@@ -92,7 +96,7 @@ function Order() {
           Go back
         </Link>
         <Link
-          to={"/checkout/step3"}
+         to="/checkout/step3"
           className="border rounded-lg p-3 bg-slate-800 text-white"
         >
           Go to payment

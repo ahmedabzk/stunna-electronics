@@ -50,18 +50,7 @@ function AdminSidebar() {
             >
               Create Product
             </MenuItem>
-            <MenuItem
-              icon={<EditRoundedIcon />}
-              component={<Link to="/admin/products/edit/:productId" />}
-            >
-              Edit Product
-            </MenuItem>
-            <MenuItem
-              icon={<DeleteIcon />}
-              component={<Link to="/admin/products/delete/:productId" />}
-            >
-              Delete Product
-            </MenuItem>
+           
           </SubMenu>
           <MenuItem icon={<ShoppingCartRoundedIcon />}>Orders</MenuItem>
           <MenuItem icon={<ReceiptRoundedIcon />}>Sales</MenuItem>

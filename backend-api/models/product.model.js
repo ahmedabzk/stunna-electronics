@@ -15,16 +15,17 @@ const productSchema = new mongoose.Schema({
     },
     maxQuantity: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     colors: {
         type: Array,
         required: true
     },
-    // sizes: {
-    //     type: Array,
-    //     required: true
-    // },
+    sizes: {
+        type: Array,
+        required: true
+    },
     images: {
         type: Array,
         required: true

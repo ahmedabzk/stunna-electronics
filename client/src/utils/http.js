@@ -82,3 +82,78 @@ export const UpdateUserProfile = async (id, formData) => {
 
 
 }
+
+export const createProduct = async (formData) => {
+  const res = await fetch("http://localhost:3000/api/v1/admin/create/product", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  if (!res.ok) {
+    const error = new Error("failed to create user");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+  const response = await res.json();
+  return response;
+};
+
+export const editProduct = async (id, formData) => {
+  const res = await fetch(`http://localhost:3000/api/v1/admin/products/update/${id}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(formData),
+  });
+
+  if (!res.ok) {
+    const error = new Error("failed to update user profile");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const getProductById = async (id) => {
+  const res = await fetch(`http://localhost:3000/api/v1/admin/products/${id}`, {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    const error = new Error("failed to update user profile");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const deleteProduct = async (id) => {
+  const res = await fetch(`http://localhost:3000/api/v1/admin/products/delete/${id}`, {
+    method: 'DELETE'
+  });
+
+  if (!res.ok) {
+    const error = new Error("failed to update user profile");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const data = await res.json();
+
+  return data;
+};

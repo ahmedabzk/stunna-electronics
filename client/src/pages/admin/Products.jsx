@@ -56,15 +56,10 @@ const fetchAllProducts = async () => {
      width: 200,
      headerAlign: "center",
    },
-   // {
-   //   field: "sizes",
-   //   headerName: "Available Sizes",
-   // },
-   // {
-   //   field: "images",
-   //   headerName: "Product Images",
-   //   width: 400,
-   // },
+   {
+     field: "sizes",
+     headerName: "Available Sizes",
+   },
    {
      field: "featured",
      headerName: "Featured",
@@ -102,10 +97,6 @@ const fetchAllProducts = async () => {
 
 function Products() {
 
- 
-
-  
- 
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['products'],
@@ -117,19 +108,18 @@ function Products() {
     return <p className="text-center">Loading...</p>
   }
   if (isError) {
-    console.log(error.info?.message);
+    return <p>{error.info?.message}</p>
   }
 
 
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <h1 className="text-center mt-4 text-slate-500 font-semibold">
+    <div className="w-[95%] h-full flex flex-col">
+      <h1 className="text-center mt-2 text-slate-500 font-semibold">
         Products
       </h1>
-      <div className="mt-4 overflow-y-auto overflow-x-auto">
-        <div style={{ display: "flex" }}>
-          <div style={{ flexGrow: 1, overflow: "hidden" }}>
+      <div className="mt-4">
+
             <DataGrid
               rows={data}
               columns={columns}
@@ -144,10 +134,10 @@ function Products() {
                   color: "firebrick",
                 },
               }}
-              disableColumnMenu:true
+             
             />
-          </div>
-        </div>
+        
+        
       </div>
     </div>
   );

@@ -22,15 +22,44 @@ import TimelineRoundedIcon from "@mui/icons-material/TimelineRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import BubbleChartRoundedIcon from "@mui/icons-material/BubbleChartRounded";
 
+import { useMutation } from "@tanstack/react-query";
+
+import { fetchLogOut } from "../../utils/http";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 function AdminSidebar() {
   const { collapseSidebar } = useProSidebar();
+     const userCtx = useContext(UserContext);
+     const navigate = useNavigate();
+
+     const { mutate } = useMutation({
+       mutationFn: fetchLogOut,
+       mutationKey: ["user"],
+       onSuccess: () => {
+         userCtx.logout();
+       },
+     });
+
+     const handleLogout = () => {
+       mutate();
+       navigate("/sign-in");
+     };
+  
   return (
     <div className="">
       <Sidebar>
         <Menu>
-          <MenuItem icon={<MenuRoundedIcon onClick={() => {
-            collapseSidebar();
-          }} />}>
+          <MenuItem
+            icon={
+              <MenuRoundedIcon
+                onClick={() => {
+                  collapseSidebar();
+                }}
+              />
+            }
+          >
             <h1>Admin</h1>
           </MenuItem>
           <MenuItem
@@ -50,17 +79,21 @@ function AdminSidebar() {
             >
               Create Product
             </MenuItem>
-           
           </SubMenu>
           <MenuItem icon={<ShoppingCartRoundedIcon />}>Orders</MenuItem>
           <MenuItem icon={<ReceiptRoundedIcon />}>Sales</MenuItem>
-          <MenuItem icon={<PeopleOutlinedIcon />}>Customers</MenuItem>
+          <MenuItem
+            icon={<PeopleOutlinedIcon />}
+            component={<Link to="/admin/customers" />}
+          >
+            Customers
+          </MenuItem>
           <SubMenu label="Charts" icon={<BarChartRoundedIcon />}>
             <MenuItem icon={<TimelineRoundedIcon />}> Timeline Chart </MenuItem>
             <MenuItem icon={<BubbleChartRoundedIcon />}>Bubble Chart</MenuItem>
           </SubMenu>
-          <MenuItem icon={<AccountCircleRoundedIcon />}>Account</MenuItem>
-          <MenuItem icon={<LogoutRoundedIcon />}>Logout</MenuItem>
+          <MenuItem icon={<AccountCircleRoundedIcon />} component={<Link to="/account"/>}>Account</MenuItem>
+          <MenuItem icon={<LogoutRoundedIcon />} onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Sidebar>
     </div>

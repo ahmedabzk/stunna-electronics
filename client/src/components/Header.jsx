@@ -7,17 +7,25 @@ import CartContext from "../context/CartContext";
 import { useContext } from "react";
 import Cart from "./Cart";
 import { UserContext } from "../context/UserContext";
+import { useMutation } from "@tanstack/react-query";
+import { fetchLogOut } from "../utils/http";
 
 export default function Header() {
   const cartCtx = useContext(CartContext);
   const cartProgress = useContext(CartProgressContext);
   const userCtx = useContext(UserContext);
 
-  console.log(userCtx.current_user);
+  const {mutate}= useMutation({
+    mutationFn: fetchLogOut,
+    mutationKey: ['user'],
+    onSuccess: () => {
+        userCtx.logout();
+    }
+  })
 
   const navigate = useNavigate();
 
-  const cartItem = cartCtx.products.length;
+  const cartItem = cartCtx.products && cartCtx.products.length > 0 ? cartCtx.products.length : 0;
 
 
   const handleShowCart = () => {
@@ -25,7 +33,7 @@ export default function Header() {
   }
 
   const handleLogout = () => {
-    userCtx.logout();
+    mutate();
     navigate('/sign-in');
   };
 

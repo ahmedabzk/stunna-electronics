@@ -1,14 +1,27 @@
-import { createContext, useState } from "react";
+import { createContext, useState,useEffect } from "react";
+
+const initialState = {
+    current_user: null
+};
 
 export const UserContext = createContext({
-    current_user: null,
+    current_user: initialState.current_user,
     login: () => { },
     logout: () => { }
 });
 
+const getItemFromLocalStore = () => {
+  const user = localStorage.getItem("user");
+  return user ? JSON.parse(user) : initialState;
+};
+
 
 export const UserContextProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(getItemFromLocalStore);
+
+      useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(currentUser));
+      }, [currentUser]);
 
     function login(user) {
         setCurrentUser(user);

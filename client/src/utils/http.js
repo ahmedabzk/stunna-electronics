@@ -46,7 +46,6 @@ export const fetchLogin = async (formData) => {
     credentials: "include",
     body: JSON.stringify(formData)
   });
-
   if (!res.ok) {
     const error = new Error("could not login");
     error.code = res.statusCode;
@@ -58,6 +57,26 @@ export const fetchLogin = async (formData) => {
   const data = await res.json();
   return data;
 };
+
+ export const fetchLogOut = async () => {
+   const res = await fetch("http://localhost:3000/api/v1/auth/logout", {
+     method: "POST",
+     headers: {
+       "content-type": "application/json",
+     },
+     credentials: "include",
+   });
+
+   if (!res.ok) {
+     const error = new Error("could not login");
+     error.code = res.statusCode;
+     error.info = await res.json();
+     throw error;
+   }
+
+   const data = await res.json();
+   return data;
+ }
 
 export const UpdateUserProfile = async (id, formData) => {
   const res = await fetch(`http://localhost:3000/api/v1/user/update/${id}`, {
@@ -156,4 +175,19 @@ export const deleteProduct = async (id) => {
   const data = await res.json();
 
   return data;
+};
+
+export const fetchAllUsers = async () => {
+  const res = await fetch("http://localhost:3000/api/v1/admin/users/all");
+
+  if (!res.ok) {
+    const error = new Error("failed to fetch different items");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const users = await res.json();
+
+  return users;
 };

@@ -1,4 +1,5 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
+
 
 const CartContext = createContext({
   products: [],
@@ -7,6 +8,10 @@ const CartContext = createContext({
   handleRemove: () => { },
   clearCart: () => {},
 });
+
+
+
+
 
 function cartReducer(state, action) {
   if (action.type === "ADD_TO_CART") {
@@ -65,11 +70,18 @@ function cartReducer(state, action) {
   return state;
 }
 
+const getItemFromLocalStorage = () => {
+  const cart = localStorage.getItem("cart");
+  return cart ? JSON.parse(cart) : { products: [] };
+};
 
 export function CartContextProvider({ children }) {
-  const [cartState, cartStateDispatch] = useReducer(cartReducer, {
-    products: [],
-  });
+
+  const [cartState, cartStateDispatch] = useReducer(cartReducer, {products: []}, getItemFromLocalStorage);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartState));
+  }, [cartState]);
 
   function handleAddToCart(product) {
     cartStateDispatch({

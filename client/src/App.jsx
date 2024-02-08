@@ -11,6 +11,9 @@ import WishList from "./components/WishList.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import AdminRootLayout from "./pages/admin/AdminRootLayout.jsx";
 import AdminSidebar from "./components/admin/AdminSidebar.jsx";
+import Customers from "./pages/admin/Customers.jsx";
+import Account from "./pages/admin/Account.jsx";
+import EditAdminAccount from "./components/admin/EditAdminAccount.jsx";
 
 
 const routeDefinitions = createRoutesFromElements(
@@ -35,15 +38,18 @@ const routeDefinitions = createRoutesFromElements(
       </Route>
     </Route>
     <Route element={<AdminRootLayout />}>
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/products" element={<Products />} />
-        <Route path="/admin/products/create-product" element={<CreateItem />} />
-        <Route
-          path="/admin/products/delete/:productId"
-          element={<DeleteItem />}
-        />
-        <Route path="/admin/products/edit/:productId" element={<EditItem />} />
+      <Route path="/admin" element={<AdminHome />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/products" element={<Products />} />
+      <Route path="/admin/products/create-product" element={<CreateItem />} />
+      <Route
+        path="/admin/products/delete/:productId"
+        element={<DeleteItem />}
+      />
+      <Route path="/admin/products/edit/:productId" element={<EditItem />} />
+      <Route path="/admin/customers" element={<Customers />} />
+      <Route path="/account" element={<Account />} />
+      <Route path="/account/edit-account" element={<EditAdminAccount />} />
     </Route>
   </Route>
 );

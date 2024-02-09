@@ -24,10 +24,11 @@ function EditAdminAccount() {
   const [formData, setFormData] = useState({});
 
   const { mutate, data, isError, error, status } = useMutation({
+    mutationKey: ['user'],
     mutationFn: () => UpdateUserProfile(id, formData),
-    onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ["user"] });
-      userCtx.login(data);
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      userCtx.updatedUser(data);
       navigate("/account");
     },
   });
@@ -83,78 +84,80 @@ function EditAdminAccount() {
   };
 
   return (
-    <div className="mt-8 max-w-3xl mx-auto flex flex-col items-center md:w-[60rem] h-full shadow-lg">
-      <p>Edit Account Details</p>
-      <form
-        onSubmit={handleSubmit}
-        className="mt-2 w-full h-full flex flex-col items-center gap-5 p-3"
-      >
-        <input
-          type="file"
-          ref={fileRef}
-          hidden
-          accept="image/*"
-          onChange={handleChange}
-        />
-        <img
-          onClick={() => fileRef.current.click()}
-          src={formData.imageUrl || userCtx.current_user.imageUrl}
-          alt="profile picture"
-          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center "
-        />
-        <p className="text-sm self-center">
-          {fileUploadError ? (
-            <span className="text-red-700">Error image uploaded</span>
-          ) : filePercent > 0 && filePercent < 100 ? (
-            <span className="text-slate-700">{`uploading: ${filePercent}%`}</span>
-          ) : filePercent === 100 ? (
-            <span className="text-green-700">Image successfully uploaded</span>
-          ) : (
-            ""
-          )}
-        </p>
+    <div className="w-[80%] h-full flex flex-col items-center">
+      <div className="mt-12 flex flex-col items-center w-[50%] h-fit p-3 border shadow-lg">
+        <p>Edit Account Details</p>
+        <form
+          onSubmit={handleSubmit}
+          className="mt-2 w-full h-full flex flex-col items-center gap-5 p-3"
+        >
+          <input
+            type="file"
+            ref={fileRef}
+            hidden
+            accept="image/*"
+            onChange={handleChange}
+          />
+          <img
+            onClick={() => fileRef.current.click()}
+            src={formData.imageUrl || userCtx.current_user.imageUrl}
+            alt="profile picture"
+            className="rounded-full h-24 w-24 object-cover cursor-pointer self-center "
+          />
+          <p className="text-sm self-center">
+            {fileUploadError ? (
+              <span className="text-red-700">Error image uploaded</span>
+            ) : filePercent > 0 && filePercent < 100 ? (
+              <span className="text-slate-700">{`uploading: ${filePercent}%`}</span>
+            ) : filePercent === 100 ? (
+              <span className="text-green-700">
+                Image successfully uploaded
+              </span>
+            ) : (
+              ""
+            )}
+          </p>
 
-        <label className="text-slate-500">*Full Name</label>
-        <input
-          type="text"
-          id="name"
-          defaultValue={userCtx.current_user.name}
-          className="border p-3 rounded-md w-[70%]"
-          onChange={handleInputChange}
-        />
+          <label className="text-slate-500">*Full Name</label>
+          <input
+            type="text"
+            id="name"
+            defaultValue={userCtx.current_user.name}
+            className="border p-3 rounded-md w-[70%]"
+            onChange={handleInputChange}
+          />
 
-        <label className="text-slate-500">*Email</label>
-        <input
-          type="email"
-          id="email"
-          defaultValue={userCtx.current_user.email}
-          className="border p-3 rounded-md w-[70%]"
-          onChange={handleInputChange}
-        />
-        <label className="text-slate-500">
-          Mobile Number
-        </label>
-        <input
-          type="number"
-          className="border p-3 rounded-md w-[70%]"
-          id="phone"
-        />
-        {isError && <p className="text-red-500">{error.info?.message}</p>}
-        <div className="flex items-center justify-around w-full">
-          <Link
-            to={"/profile"}
-            className="border p-3 rounded-lg bg-slate-200 hover:bg-slate-100"
-          >
-            Back to Profile
-          </Link>
-          <button
-            disabled={status === "pending"}
-            className="border p-3 rounded-lg bg-slate-800 text-white hover:shadow-xl disabled:cursor-not-allowed"
-          >
-            {status === "pending" ? "loading..." : "Update Profile"}
-          </button>
-        </div>
-      </form>
+          <label className="text-slate-500">*Email</label>
+          <input
+            type="email"
+            id="email"
+            defaultValue={userCtx.current_user.email}
+            className="border p-3 rounded-md w-[70%]"
+            onChange={handleInputChange}
+          />
+          <label className="text-slate-500">Mobile Number</label>
+          <input
+            type="number"
+            className="border p-3 rounded-md w-[70%]"
+            id="phone"
+          />
+          {isError && <p className="text-red-500">{error.info?.message}</p>}
+          <div className="flex items-center justify-around w-full">
+            <Link
+              to={"/account"}
+              className="border p-3 rounded-lg bg-slate-200 hover:bg-slate-100"
+            >
+              Back to Account
+            </Link>
+            <button
+              disabled={status === "pending"}
+              className="border p-3 rounded-lg bg-slate-800 text-white hover:shadow-xl disabled:cursor-not-allowed"
+            >
+              {status === "pending" ? "loading..." : "Update Profile"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ const initialState = {
 export const UserContext = createContext({
     current_user: initialState.current_user,
     login: () => { },
+    updatedUser: () => { },
     logout: () => { }
 });
 
@@ -27,6 +28,10 @@ export const UserContextProvider = ({ children }) => {
         setCurrentUser(user);
     }
 
+    function updatedUser(updatedInfo) {
+        setCurrentUser((prevState) => ({...prevState, ...updatedInfo}));
+    }
+
     function logout() {
         setCurrentUser(null);
     }
@@ -34,6 +39,7 @@ export const UserContextProvider = ({ children }) => {
     const userValues = {
         current_user: currentUser,
         login,
+        updatedUser,
         logout
     }
     return <UserContext.Provider value={userValues}>

@@ -1,7 +1,7 @@
 
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 
-import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, Order, Product, CheckOut, Payment, Profile } from "./pages";
+import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, CancelPayment, Product, CheckOut,SuccessPayment ,Profile, NotFound } from "./pages";
 import {AdminHome, CreateItem, EditItem,DeleteItem,AdminDashboard, Products} from  './pages/admin'
 
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
@@ -10,10 +10,10 @@ import MyOrders from "./components/MyOrders.jsx";
 import WishList from "./components/WishList.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import AdminRootLayout from "./pages/admin/AdminRootLayout.jsx";
-import AdminSidebar from "./components/admin/AdminSidebar.jsx";
 import Customers from "./pages/admin/Customers.jsx";
 import Account from "./pages/admin/Account.jsx";
 import EditAdminAccount from "./components/admin/EditAdminAccount.jsx";
+
 
 
 const routeDefinitions = createRoutesFromElements(
@@ -33,8 +33,8 @@ const routeDefinitions = createRoutesFromElements(
         <Route path="/profile/my-orders" element={<MyOrders />} />
         <Route path="/profile/wish-list" element={<WishList />} />
         <Route path="/checkout/step1" element={<CheckOut />} />
-        <Route path="/checkout/step2" element={<Order />} />
-        <Route path="/checkout/step3" element={<Payment />} />
+        <Route path="/payment-success" element={<SuccessPayment />} />
+        <Route path="/cancel-payment" element={<CancelPayment />} />
       </Route>
     </Route>
     <Route element={<AdminRootLayout />}>
@@ -51,6 +51,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/account" element={<Account />} />
       <Route path="/account/edit-account" element={<EditAdminAccount />} />
     </Route>
+    <Route path="/*" element={<NotFound/>} />
   </Route>
 );
 

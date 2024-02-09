@@ -17,7 +17,7 @@ import {
 
 function EditAccount() {
   const userCtx = useContext(UserContext);
-    const fileRef = useRef();
+  const fileRef = useRef();
   const id = userCtx.current_user._id;
   const navigate = useNavigate();
 
@@ -26,12 +26,14 @@ function EditAccount() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
 
+  // console.log(userCtx.current_user);
 
-    const { mutate, data, isError, error,status} = useMutation({
+  const { mutate,isError, error, status } = useMutation({
+        mutationKey: ['user'],
         mutationFn: () => UpdateUserProfile(id, formData),
-        onSuccess: () => {
+    onSuccess: (data) => {
           queryClient.invalidateQueries({ queryKey: ['user'] });
-          userCtx.login(data);
+          userCtx.updatedUser(data);
           navigate('/profile');
         }
     });
@@ -86,11 +88,8 @@ function EditAccount() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        mutate()
-
+        mutate();
     }
-  
-
 
   return (
     <div className="mt-8 max-w-3xl mx-auto flex flex-col items-center md:w-[60rem] h-auto shadow-lg">

@@ -7,7 +7,7 @@ import { Link} from "react-router-dom";
 
 function Profile() {
   const userCtx = useContext(UserContext);
-  console.log(userCtx.current_user.role);
+  
 
   return (
     <div className="max-w-3xl mx-auto flex flex-col items-center md:w-[60rem] h-[40rem] shadow-lg ">

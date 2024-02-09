@@ -10,6 +10,7 @@ const verifyToken = (req, res, next) => {
     JWT.verify(token, process.env.SECRET, (err, user) => {
         if (err) return next(403, "Forbidden");
         req.user = user;
+        // console.log(user);
         next();
     });
 }

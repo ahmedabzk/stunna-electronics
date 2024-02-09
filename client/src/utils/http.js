@@ -96,7 +96,7 @@ export const UpdateUserProfile = async (id, formData) => {
   }
 
   const data = await res.json();
-
+  console.log(data);
   return data;
 
 
@@ -119,6 +119,22 @@ export const createProduct = async (formData) => {
   }
   const response = await res.json();
   return response;
+};
+
+
+export const fetchAllProducts = async () => {
+  const res = await fetch("http://localhost:3000/api/v1/admin/products/all");
+
+  if (!res.ok) {
+    const error = new Error("failed to fetch different items");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const products = await res.json();
+
+  return products;
 };
 
 export const editProduct = async (id, formData) => {

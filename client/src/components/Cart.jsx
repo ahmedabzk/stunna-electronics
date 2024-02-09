@@ -1,14 +1,20 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartContext from "../context/CartContext";
 import CartProgressContext from "../context/CartProgress";
+import { UserContext } from "../context/UserContext";
 import CartItems from "./CartItems";
 
 import { formatter } from "../utils/formatter";
+import PayButton from "./PaymentButton";
 
 function Cart() {
   const cartCtx = useContext(CartContext);
   const ctProgress = useContext(CartProgressContext);
+
+  const userCtx = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const totalAmount = cartCtx.products.reduce((total, product) => {
     return total + product.quantity * product.price;
@@ -57,20 +63,17 @@ function Cart() {
           <div className="flex justify-between items-center border border-slate-300 p-2">
             <div className="flex flex-col items-center">
               <p className="font-bold text-slate-700">Subtotal Amount:</p>
-              <p className="font-bold text-slate-700">{formatter.format(totalAmount)}</p>
+              <p className="font-bold text-slate-700">
+                {formatter.format(totalAmount)}
+              </p>
             </div>
-
-            <Link
-              to={"/checkout/step1"}
-              className="border border-slate-300 p-3 bg-slate-800 text-white rounded-lg"
-            >
-              <button
-                disabled={cartCtx.products.length === 0}
-                onClick={handleClose}
-              >
-                Check Out
+            {userCtx.current_user._id ? (
+              <PayButton cartItems={cartCtx.products} />
+            ) : (
+              <button className="cart-login" onClick={() => navigate("/sign-in")}>
+                Login to Check out
               </button>
-            </Link>
+            )}
           </div>
         </div>
       </div>

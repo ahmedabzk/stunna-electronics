@@ -1,17 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "../utils/http.js";
 import { Link, useParams } from "react-router-dom";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BiShoppingBag } from "react-icons/bi";
+import ImageGallery from "react-image-gallery";
 import { FaArrowLeft } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Card from "../components/Card.jsx";
 import CartContext from "../context/CartContext.jsx";
-
+import { formatter } from "../utils/formatter.js";
 
 function Item() {
+  const [selectedColor, setSelectedColor] = useState("");
+  const [size, setSize] = useState("");
+   const [imageUrl, setImageUrl] = useState([]);
   const cartCtx = useContext(CartContext);
 
   const params = useParams();
+
   const productId = params.productId;
 
   const productById = useQuery({
@@ -24,6 +31,16 @@ function Item() {
     queryFn: () => fetchData("recommended"),
   });
 
+
+  useEffect(() => {
+    let image = [];
+    productById.data?.images.map((url) => {
+      image.push({ original: url, thumbnail: url });
+    });
+
+    setImageUrl(image);
+  }, []);
+
   if (productById.isPending) {
     return <p>Loading item...</p>;
   }
@@ -31,69 +48,111 @@ function Item() {
     return <p>Loading recommended products...</p>;
   }
 
+
+  const plusMinuceButton =
+    "flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500";
   return (
     <section className="mt-12 mb-12 flex flex-col items-center md:items-start max-w-[1200px] mx-auto gap-12">
-      <div className="flex flex-col gap-4 items-center md:items-start w-[500px] md:w-[800px] ">
-        <Link to="/shop" className="flex gap-2 items-center">
-          <FaArrowLeft />
-          Back to shop
-        </Link>
-        <div className="border border-slate-300 flex flex-col gap-4 md:flex-row">
-          <img
-            src={productById.data.images[0]}
-            className="md:w-[400px]  bg-[#F3F3F3] object-contain"
+      <div className="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-cols-2 lg:py-10">
+        {/* image gallery */}
+        <div className="container mx-auto px-4">
+          <ImageGallery
+            items={imageUrl}
+            showBullets={false}
+            showFullscreenButton={false}
+            showPlayButton={false}
+            //   autoPlay={true}
           />
-          <button className="flex flex-row md:flex-col">
-            {productById.data.images.length > 0 &&
-              productById.data.images.map((url) => (
-                <img
-                  key={url}
-                  src={url}
-                  alt="images"
-                  className="border border-slate-300 w-[80px] md:w-[250px] md:h-[80px] object-contain"
-                />
-              ))}
-          </button>
-          <div className="  border border-slate-400 ">
-            <div className="ml-4 flex flex-col gap-6 items-start">
-              <p className="text-slate-500 text-sm">{productById.data.brand}</p>
-              <h2 className="font-bold">{productById.data.name}</h2>
-              <h3 className="text-sm ">{productById.data.description}</h3>
-              <p className="text-slate-400 text-sm">
-                Lens Width and Frame Size
-              </p>
-              <select className="p-2 border border-blue-500 rounded-lg w-full">
-                <option>28mm</option>
-                <option>36mm</option>
-                <option>42mm</option>
-              </select>
-              <div className="flex gap-4">
-                {productById.data.colors.length > 0 &&
-                  productById.data.colors.map((color) => (
-                    <button key={color} style={{backgroundColor: color, width: '14px', height: '14px', borderRadius: '50%'}}>
-                      
-                    </button>
-                  ))}
-              </div>
-              <p>{productById.data.price}</p>
-              <button onClick={() => cartCtx.addToCart(productById.data)} className="p-3 rounded-sm bg-black text-white w-fit mb-4">
-                Add To Basket
-              </button>
+        </div>
+
+        {/* description  */}
+
+        <div className="px-5 lg:px-5">
+          <h2 className="pt-3 text-2xl font-bold lg:pt-0">
+            {productById.data?.title}
+          </h2>
+
+          <p className="mt-5 font-bold">
+            Availability:{" "}
+            {productById.data?.maxQuantity > 0 ? (
+              <span className="text-green-600">In Stock </span>
+            ) : (
+              <span className="text-red-600">Out Of Stock</span>
+            )}
+          </p>
+          <p className="font-bold">
+            Brand:{" "}
+            <span className="font-normal">{productById.data?.brand}</span>
+          </p>
+          <p className="font-bold">
+            Category:{" "}
+            <span className="font-normal">{productById.data?.category}</span>
+          </p>
+
+          <p className="mt-4 text-4xl font-bold text-violet-900">
+            {formatter.format(productById.data?.price)}
+            {/* <span className="text-xs text-gray-400 line-through">
+              ${productDetailItem.previousPrice}
+            </span> */}
+          </p>
+          <p className="pt-5 text-sm leading-5 text-gray-500">
+            {productById.data?.description}
+          </p>
+          <div className="mt-6">
+            <p className="pb-2 text-xs text-gray-500">Colors</p>
+            <div className="flex gap-1">
+              {productById.data?.colors.map((color, index) => {
+                return (
+                  <button
+                    key={index}
+                    className={`cursor-pointer border border-white focus:ring-2 active:ring-2`}
+                    onClick={() => setSelectedColor(color)}
+                  >{color}</button>
+                );
+              })}
             </div>
+          </div>
+          <div className="mt-6">
+            <p className="pb-2 text-xs text-gray-500">Storage</p>
+            <div className="flex gap-1">
+              {productById.data?.storage.map((size, index) => {
+                return (
+                  <button
+                    key={index}
+                    className="flex cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
+      
+                    onClick={() => setSize(size)}>{size}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mt-7 flex flex-row items-center gap-6">
+            <button
+              onClick={() => cartCtx.addToCart(productById.data, selectedColor, size)}
+              className="flex h-12 w-1/3 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800"
+            >
+              <BiShoppingBag className="mx-2" />
+              Add to cart
+            </button>
+            <button className="flex h-12 w-1/3 items-center justify-center bg-amber-400 duration-100 hover:bg-yellow-300">
+              <AiOutlineHeart className="mx-2" />
+              Wishlist
+            </button>
           </div>
         </div>
       </div>
       <div>
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Recommended Products</h1>
+
           <Link to="/recommended" className="underline">
             See All
           </Link>
         </div>
-        <Card data={recommendedProducts.data} />
+        {/* <Card data={recommendedProducts.data} /> */}
       </div>
     </section>
   );
 }
-
 export default Item;

@@ -21,7 +21,7 @@ function SignIn() {
     onSuccess: (data) => {
       userCtx.login(data);
 
-      const destination = data.role === 'admin' ? "/admin" : "/checkout/step1";
+      const destination = data.role === 'admin' ? "/admin" : "/checkout";
       navigate(destination);
     }
   });

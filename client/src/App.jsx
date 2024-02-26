@@ -1,7 +1,10 @@
 
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 
-import { Home, Shop, Recommended, Featured, SignIn, SignUp, ForgetPassword, CancelPayment, Product, CheckOut,SuccessPayment ,Profile, NotFound } from "./pages";
+import {
+  Home, Shop, About, SignIn, SignUp, ForgetPassword,
+  Product, CheckOut, SuccessPayment, Profile, NotFound, Phones, Samsung, Iphone, Laptops, Hp, Macbook
+} from "./pages";
 import {AdminHome, CreateItem, EditItem,DeleteItem,AdminDashboard, Products} from  './pages/admin'
 
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
@@ -23,8 +26,13 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/forget-password" element={<ForgetPassword />} />
-      <Route path="/featured" element={<Featured />} />
-      <Route path="/recommended" element={<Recommended />} />
+      <Route path="/phones" element={<Phones />} />
+      <Route path="/phones/iphone" element={<Iphone />} />
+      <Route path="/phones/samsung" element={<Samsung />} />
+      <Route path="/laptops" element={<Laptops />} />
+      <Route path="/laptops/hp" element={<Hp />} />
+      <Route path="/laptops/macbook" element={<Macbook />} />
+      <Route path="/about" element={<About />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/product/:productId" element={<Product />} />
       <Route element={<ProtectedRoutes />}>
@@ -32,9 +40,9 @@ const routeDefinitions = createRoutesFromElements(
         <Route path="/profile/edit-account" element={<EditAccount />} />
         <Route path="/profile/my-orders" element={<MyOrders />} />
         <Route path="/profile/wish-list" element={<WishList />} />
-        <Route path="/checkout/step1" element={<CheckOut />} />
+        <Route path="/checkout" element={<CheckOut />} />
         <Route path="/payment-success" element={<SuccessPayment />} />
-        <Route path="/cancel-payment" element={<CancelPayment />} />
+        
       </Route>
     </Route>
     <Route element={<AdminRootLayout />}>
@@ -51,7 +59,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/account" element={<Account />} />
       <Route path="/account/edit-account" element={<EditAdminAccount />} />
     </Route>
-    <Route path="/*" element={<NotFound/>} />
+    <Route path="/*" element={<NotFound />} />
   </Route>
 );
 
@@ -133,9 +141,6 @@ const routeDefinitions = createRoutesFromElements(
 
 
 const router = createBrowserRouter(routeDefinitions);
-
-
-
 
 function App() {
   return (

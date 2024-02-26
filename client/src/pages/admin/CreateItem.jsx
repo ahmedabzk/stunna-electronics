@@ -41,7 +41,7 @@ function CreateItem() {
   });
 
   const handleUpload = () => {
-    if (files.length > 0 && files.length < 4) {
+    if (files.length > 0 && files.length < 6) {
       setLoading(true);
       setUploadError(false);
       const promises = [];
@@ -62,7 +62,7 @@ function CreateItem() {
         setLoading(false);
       });
     } else {
-      setImageUploadError("You can only upload upto 4 images per product");
+      setImageUploadError("You can only upload upto 6 images per product");
       setLoading(false);
     }
   };
@@ -112,13 +112,13 @@ function CreateItem() {
   };
 
   const handleSizeChange = (e) => {
-    const sizeArray = e.target.value
+    const storageArray = (e.target.value)
       .split(",")
       .map((item) => item.trim())
       .filter((item) => item !== "");
     setFormData({
       ...formData,
-      sizes: sizeArray,
+      storage: storageArray,
     });
   };
 
@@ -189,30 +189,21 @@ function CreateItem() {
               className="p-3 border rounded border-slate-400 w-[80%]"
               required
             />
-            <label className="text-slate-500 font-semibold">Sizes</label>
+            <label className="text-slate-500 font-semibold">Storage</label>
             <input
               type="text"
               className="p-3 border rounded border-slate-400 w-[80%]"
               required
               onChange={handleSizeChange}
-              defaultValue={formData.sizes}
+              defaultValue={formData.storage}
             />
-            <label className="text-slate-500 font-semibold">Featured</label>
+            
+            <label className="text-slate-500 font-semibold">Category</label>
             <input
               type="text"
-              id="featured"
+              id="category"
               className="p-3 border rounded border-slate-400 w-[80%]"
               required
-              defaultValue="true or false"
-              onChange={handleChange}
-            />
-            <label className="text-slate-500 font-semibold">Recommended</label>
-            <input
-              type="text"
-              id="recommended"
-              className="p-3 border rounded border-slate-400 w-[80%]"
-              required
-              defaultValue="true or false"
               onChange={handleChange}
             />
             <label className="text-slate-500 font-semibold">Price</label>

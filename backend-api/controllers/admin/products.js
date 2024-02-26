@@ -46,10 +46,9 @@ export const updateProductById = async (req, res, next) => {
             maxQuantity: req.body.maxQuantity,
             colors: req.body.colors,
             images: req.body.images,
-            featured: req.body.featured,
-            recommended: req.body.recommended,
+            category: req.body.category,
             price: req.body.maxQuantity,
-            sizes: req.body.sizes,
+            storage: req.body.sizes,
           },
         },
         {

@@ -3,23 +3,60 @@ import Product from '../models/product.model.js';
 import errorHandler from '../errors/error.js';
 
 
-export const getFeaturedProducts = async (req, res, next) => {
+export const getIphoneProducts = async (req, res, next) => {
 
     try {
-        const products = await Product.find({ featured: true });
+        const products = await Product.find({ brand: "iphone"});
         return res.status(200).json(products);
     } catch (err) {
         next(err);
     }
 };
 
-export const getRecommendedProducts = async (req, res, next) => {
+export const getSamsungProducts = async (req, res, next) => {
     try {
-        const products = await Product.find({ recommended: true });
+        const products = await Product.find({ brand: "samsung"});
         return res.status(200).json(products);
     } catch (err) {
         next(err);
     }
+};
+
+export const getAllPhones = async (req, res, next) => {
+  try {
+    const product = await Product.find({ category: "phones" });
+    return res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+export const getHpLaptops = async (req, res, next) => {
+  try {
+    const product = await Product.find({ brand: "hp"});
+    return res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getMacbookLaptops = async (req, res, next) => {
+  try {
+    const product = await Product.find({ brand: "macbook"});
+    return res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllLaptops = async (req, res, next) => {
+  try {
+    const product = await Product.find({ category: "lapops" });
+    return res.status(200).json(product);
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const getProductById = async (req, res, next) => {
@@ -32,6 +69,8 @@ export const getProductById = async (req, res, next) => {
         next(err);
     }
 };
+
+
 
 export const getAllProducts = async (req, res, next) => {
     try {

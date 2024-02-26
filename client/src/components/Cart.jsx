@@ -27,6 +27,7 @@ function Cart() {
 
   const handleClear = () => {
     cartCtx.clearCart();
+    // ctProgress.setIsCartOpen(false);
   };
 
   return (
@@ -82,3 +83,5 @@ function Cart() {
 }
 
 export default Cart;
+
+

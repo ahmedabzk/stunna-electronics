@@ -15,10 +15,12 @@ const CartContext = createContext({
 
 function cartReducer(state, action) {
   if (action.type === "ADD_TO_CART") {
+    const { product, selectedColor,size } = action.payload;
+
     const updatedProducts = [...state.products];
 
     const existingCartItemIndex = updatedProducts.findIndex(
-      (item) => item._id === action.payload._id
+      (item) => item._id === product._id
     );
 
     const existingCartItem = updatedProducts[existingCartItemIndex];
@@ -30,7 +32,24 @@ function cartReducer(state, action) {
       };
       updatedProducts[existingCartItemIndex] = updatedProduct;
     } else {
-      updatedProducts.push({ ...action.payload, quantity: 1 });
+      //  if (selectedColor) {
+      //    product.colors = selectedColor;
+      //  }
+      //  product.selectedColor = product.colors[0];
+      // window.alert("Select a color");
+
+      const {
+        maxQuantity: maxQuantity,
+        createdAt: createdAt,
+        sizes: sizes,
+        updatedAt: updatedAt,
+        colors: colors,
+        description: description,
+        storage: storage,
+        ...rest
+      } = product;
+     
+      updatedProducts.push({ ...rest, quantity: 1, selectedColor, size});
     }
 
     return { ...state, products: updatedProducts };
@@ -83,10 +102,10 @@ export function CartContextProvider({ children }) {
     localStorage.setItem("cart", JSON.stringify(cartState));
   }, [cartState]);
 
-  function handleAddToCart(product) {
+  function handleAddToCart(product, selectedColor = '', size) {
     cartStateDispatch({
       type: "ADD_TO_CART",
-      payload: product,
+      payload: { product, selectedColor, size }
     });
   }
 

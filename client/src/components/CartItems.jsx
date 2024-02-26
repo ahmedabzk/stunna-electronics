@@ -4,6 +4,7 @@ import CartContext from "../context/CartContext";
 
 function CartItems() {
   const cartCtx = useContext(CartContext);
+ 
   return (
     <div>
       {cartCtx.products.map((product) => (
@@ -25,26 +26,21 @@ function CartItems() {
               -
             </button>
           </div>
-          <img src={product.images} className="w-[200px] object-contain" />
-          <div>
+          <img src={product.images} className="w-[100px] object-contain" />
+          <div className="flex gap-2">
             <p className="underline">{product.name}</p>
-            <p>Quantity</p>
-            <p>{product.quantity}</p>
+            <div className="flex flex-col items-center">
+              <p>Quantity</p>
+              <p>{product.quantity}</p>
+            </div>
           </div>
           <div>
             <p>Size</p>
             <p>{product.size}</p>
           </div>
           <div className="flex flex-col items-center">
-            <p>Color</p>
-            <p
-              style={{
-                backgroundColor: product.selectedColor || product.colors[0],
-                width: "14px",
-                height: "14px",
-                borderRadius: "50%",
-              }}
-            ></p>
+            <p>Colors</p>
+            <p>{product.selectedColor}</p>
           </div>
           <p>{product.price}</p>
           <button

@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    sizes: {
+    storage: {
         type: Array,
         required: true
     },
@@ -30,14 +30,11 @@ const productSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    featured: {
-        type: Boolean,
+    category: {
+        type: String,
         required: true
     },
-    recommended: {
-        type: Boolean,
-        required: true
-    },
+    
     price: {
         type: Number,
         required: true

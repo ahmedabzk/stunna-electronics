@@ -57,7 +57,7 @@ function Home() {
             See All
           </Link>
         </div>
-        <Card data={featuredItems.data} />
+        {/* <Card data={featuredItems.data} /> */}
       </div>
       <div>
         <div className="flex justify-between">
@@ -66,7 +66,7 @@ function Home() {
             See All
           </Link>
         </div>
-        <Card data={recommendedItems.data} />
+        {/* <Card data={recommendedItems.data} /> */}
       </div>
       {/* <Footer /> */}
     </section>

@@ -8,17 +8,17 @@ function Card({ data }) {
           <Link
             to={`/product/${product._id}`}
             key={product._id}
-            className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow w-[25rem] h-[20rem]"
+            className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow w-[20rem]"
           >
             <img
               src={product.images}
               className="rounded-t-lg h-[8rem] object-contain"
             />
             <div className="p-4">
-              <h2 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+              <h2 className="mb-1 text-xl font-semibold tracking-tight text-gray-900">
                 {product.name}
               </h2>
-              <p className="mb-1 font-normal text-gray-600 line-clamp-3">
+              <p className="mb-1 font-normal tracking-tight text-gray-600 line-clamp-3">
                 {product.description}
               </p>
               <Link

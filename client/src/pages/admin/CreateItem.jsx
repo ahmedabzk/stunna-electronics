@@ -7,7 +7,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useState } from "react";
-import { app } from "../../firebase";
+import { app } from "../../firebase.js";
 
 
 
@@ -27,10 +27,12 @@ function CreateItem() {
     images: []
   });
   const [files, setFiles] = useState([]);
+
   const [filePercent, setFilePercent] = useState(0);
   const [imageUploadError, setImageUploadError] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState(false);
+
 
   const {mutate,status, isError,error, isPending } = useMutation({
     mutationKey: ['products'],
@@ -50,11 +52,12 @@ function CreateItem() {
         promises.push(storeImages(files[i]));
       }
 
-      Promise.all(promises).then((url) => {
+      Promise.all(promises).then((urls) => {
         setFormData({
           ...formData,
-          images: formData.images.concat(url),
+          images: formData.images.concat(urls),
         });
+        
         setLoading(false);
         setUploadError(false);
       }).catch((err) => {
@@ -93,6 +96,8 @@ function CreateItem() {
       );
     });
   };
+
+  
 
 
   const handleChange = (e) => {

@@ -39,19 +39,9 @@ const columns = [
     // headerAlign: "center",
   },
   {
-    field: "sizes",
-    headerName: "Available Sizes",
-  },
-  {
-    field: "featured",
-    headerName: "Featured",
-    headerAlign: "center",
-  },
-  {
-    field: "recommended",
-    headerName: "Recommended",
-    //  width: 150,
-    headerAlign: "center",
+    field: "storage",
+    headerName: "Storage",
+    width: 200,
   },
   {
     field: "price",

@@ -7,7 +7,7 @@ import ImageGallery from "react-image-gallery";
 import { FaArrowLeft } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 
-import Card from "../components/Card.jsx";
+
 import CartContext from "../context/CartContext.jsx";
 import { formatter } from "../utils/formatter.js";
 
@@ -16,7 +16,7 @@ function Item() {
   const [size, setSize] = useState("");
    const [imageUrl, setImageUrl] = useState([]);
   const cartCtx = useContext(CartContext);
-
+  console.log(imageUrl);
   const params = useParams();
 
   const productId = params.productId;
@@ -39,7 +39,7 @@ function Item() {
     });
 
     setImageUrl(image);
-  }, []);
+  }, [productById.data]);
 
   if (productById.isPending) {
     return <p>Loading item...</p>;

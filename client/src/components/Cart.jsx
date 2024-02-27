@@ -68,10 +68,10 @@ function Cart() {
                 {formatter.format(totalAmount)}
               </p>
             </div>
-            {userCtx.current_user._id ? (
+            {userCtx.current_user? (
               <PayButton cartItems={cartCtx.products} />
             ) : (
-              <button className="cart-login" onClick={() => navigate("/sign-in")}>
+                <button className="cart-login" onClick={() => { navigate("/sign-in"); handleClose() }}>
                 Login to Check out
               </button>
             )}

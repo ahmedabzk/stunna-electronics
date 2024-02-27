@@ -108,7 +108,7 @@ export default function Header() {
           <TfiAlignJustify className="w-10 h-10" />
           <span>All</span>
         </div>
-        <div className="flex items-center md:w-[25%] gap-8 ">
+        <div className="flex items-center md:w-[25%] gap-8 z-50">
           <Link to="/shop">Shop</Link>
           <Dropdown />
           <Link to="/about">About</Link>

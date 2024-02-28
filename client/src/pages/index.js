@@ -5,6 +5,7 @@ export { default as SignIn } from "./SignIn";
 export { default as SignUp } from "./SignUp";
 export { default as ForgetPassword } from "./ForgetPassword.jsx";
 export { default as Product } from "./Product.jsx";
+export { default as Search } from "./Search.jsx";
 export { default as CheckOut } from "./CheckOut.jsx";
 export { default as SuccessPayment } from "./SuccessPayment.jsx";
 export { default as Profile } from "./Profile.jsx";

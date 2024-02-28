@@ -3,7 +3,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import {
   Home, Shop, About, SignIn, SignUp, ForgetPassword,
-  Product, CheckOut, SuccessPayment, Profile, NotFound, Phones, Samsung, Iphone, Laptops, Hp, Macbook
+  Product, CheckOut, SuccessPayment, Profile, NotFound,Search, Phones, Samsung, Iphone, Laptops, Hp, Macbook
 } from "./pages";
 import {AdminHome, CreateItem, EditItem,DeleteItem,AdminDashboard, Products} from  './pages/admin'
 
@@ -34,6 +34,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/laptops/macbook" element={<Macbook />} />
       <Route path="/about" element={<About />} />
       <Route path="/shop" element={<Shop />} />
+      <Route path="/search" element={<Search />} />
       <Route path="/product/:productId" element={<Product />} />
       <Route element={<ProtectedRoutes />}>
         <Route path="/profile" element={<Profile />} />
@@ -42,7 +43,6 @@ const routeDefinitions = createRoutesFromElements(
         <Route path="/profile/wish-list" element={<WishList />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/payment-success" element={<SuccessPayment />} />
-        
       </Route>
     </Route>
     <Route element={<AdminRootLayout />}>

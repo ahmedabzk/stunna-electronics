@@ -5,7 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import CartProgressContext from "../context/CartProgress";
 import CartContext from "../context/CartContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Cart from "./Cart";
 import { UserContext } from "../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
@@ -15,7 +15,8 @@ import { TfiAlignJustify } from "react-icons/tfi";
 import { menuItems } from "../utils/menuItems";
 
 export default function Header() {
-  
+  const [searchTerm, setSearchTerm] = useState("");
+
   const cartCtx = useContext(CartContext);
   const cartProgress = useContext(CartProgressContext);
   const userCtx = useContext(UserContext);
@@ -31,6 +32,24 @@ export default function Header() {
   const navigate = useNavigate();
 
   const cartItem = cartCtx.products && cartCtx.products.length > 0 ? cartCtx.products.length : 0;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams();
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, []);
+
+
 
 
   const handleShowCart = () => {
@@ -52,12 +71,13 @@ export default function Header() {
           <h1 className="text-3xl font-bold">Logo</h1>
         </Link>
         <div className="flex items-center gap-2 md:m-2 md:w-[40%] w-[30%]">
-          <form className="bg-slate-100 p-2 border border-slate-400 rounded-lg flex justify-between items-center gap-2 w-full">
+          <form onSubmit={handleSubmit} className="bg-slate-100 p-2 border border-slate-400 rounded-lg flex justify-between items-center gap-2 w-full">
             <CiSearch className="text-slate-600 hover:cursor-pointer" />
             <input
               type="text"
               placeholder="search"
               className="bg-transparent focus:outline-none w-full"
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </form>
         </div>

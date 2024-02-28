@@ -27,8 +27,7 @@ function Shop() {
     error,
     fetchNextPage,
     isFetchingNextPage,
-    hasNextPage } =
-    useInfiniteQuery({
+    hasNextPage } = useInfiniteQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
       initialPageParam: 10,

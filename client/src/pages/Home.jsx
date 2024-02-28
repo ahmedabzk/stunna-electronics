@@ -1,29 +1,45 @@
 import { useQuery } from "@tanstack/react-query";
 
-import Footer from "../components/Footer";
-import { fetchData } from "../utils/http";
+
+import { fetchProductsByBrandWithLimit } from "../utils/http";
 import Card from "../components/Card";
 import { Link } from "react-router-dom";
 
+import Laptops from "../assets/laptop.webp";
+import PhoneLogo from "../assets/phone.webp";
+
+
 function Home() {
-  const featuredItems = useQuery({
-    queryKey: ["featured"],
-    queryFn: () => fetchData("featured"),
+  const samsungProducts = useQuery({
+    queryKey: ["samsung"],
+    queryFn: () => fetchProductsByBrandWithLimit("samsung"),
   });
 
-  const recommendedItems = useQuery({
-    queryKey: ["recommended"],
-    queryFn: () => fetchData("recommended")
+  const iphoneProducts = useQuery({
+    queryKey: ["iphone"],
+    queryFn: () => fetchProductsByBrandWithLimit("iphone"),
   });
 
-  if (featuredItems.isPending && recommendedItems.isPending) {
+  const macProducts = useQuery({
+    queryKey: ["samsung"],
+    queryFn: () => fetchProductsByBrandWithLimit("hp"),
+  });
+
+  const hpProducts = useQuery({
+    queryKey: ["iphone"],
+    queryFn: () => fetchProductsByBrandWithLimit("macbook"),
+  });
+
+  if (samsungProducts.isPending && iphoneProducts.isPending && hpProducts.isPending && macProducts.isPending) {
     return <p className="text-center">Loading Products ...</p>;
   }
-  if (featuredItems.isError && recommendedItems.isError) {
+  if (samsungProducts.isError && iphoneProducts.isError && hpProducts.isError && macProducts.isError) {
     return (
       <>
-        <p>{featuredItems.error.message}</p>
-        <p>{recommendedItems.error.message}</p>
+        <p className="text-center">{samsungProducts.error.message}</p>
+        <p className="text-center">{iphoneProducts.error.message}</p>
+        <p className="text-center">{hpProducts.error.message}</p>
+        <p className="text-center">{macProducts.error.message}</p>
       </>
     );
   }
@@ -31,15 +47,20 @@ function Home() {
   return (
     <section className="mt-12 max-w-[1600px] mx-auto flex flex-col items-center md:items-start gap-12">
       <div className="bg-[#F3F3F3] w-full flex flex-col md:flex-row items-center gap-4 shadow-lg">
-        <div className="ml-5 flex flex-col gap-4">
-          <h1 className="text-xl">
-            <span className="font-bold">See</span> everything with{" "}
-            <span className="font-bold">Clarity</span>
+        <img
+          src={PhoneLogo}
+          className="rounded-t-lg h-[20rem] w-1/3 object-contain"
+        />
+        <div className="ml-5 flex flex-col items-center gap-4 w-1/3 ">
+          <h1 className="text-xl font-semibold text-blue-400 bg-clip-border">
+            <span className="font-bold">Shop</span> from the number one trusted
+            dealer in <span className="font-bold">Electronics</span>
           </h1>
-          <p className="">
-            Buying eyewear should leave you happy and good-looking, with money
-            in your pocket. Glasses, sunglasses, and contacts we&apos;ve got
-            your eyes covered.
+          <p className="font-sans text-base antialiased font-normal leading-relaxed text-gray-700">
+            Buying phones or computers should leave you happy and with money in
+            your pocket. <strong>iphones</strong>,<strong>Samsung</strong>,
+            <strong>Macbooks</strong>,<strong>Hp</strong> laptops we&apos;ve got
+            your covered.
           </p>
           <Link
             to="/shop"
@@ -48,25 +69,48 @@ function Home() {
             Shop Now
           </Link>
         </div>
-        <img src="https://media.istockphoto.com/id/1406233756/photo/smiling-young-woman-choosing-eyeglasses-in-optical-store.jpg?s=612x612&w=0&k=20&c=bPuslHvx5Mlnk3uvw9u9i2zjeMorGp9LVu7pOKxWMtA=" />
+        <img
+          src={Laptops}
+          className="rounded-t-lg h-[20rem] w-1/3  object-contain "
+        />
       </div>
       <div>
         <div className="flex justify-between">
-          <h1 className="text-xl font-bold">Featured Products</h1>
-          <Link to="/featured" className="underline">
+          <h1 className="text-xl font-bold">Samsung Products</h1>
+          <Link to="/phones/samsung" className="underline">
             See All
           </Link>
         </div>
-        {/* <Card data={featuredItems.data} /> */}
+        <Card data={samsungProducts.data} />
       </div>
       <div>
         <div className="flex justify-between">
-          <h1 className="text-xl font-bold">Recommended Products</h1>
-          <Link to="/recommended" className="underline">
+          <h1 className="text-xl font-bold">Apple phones</h1>
+          <Link to="/phones/iphone" className="underline">
             See All
           </Link>
         </div>
-        {/* <Card data={recommendedItems.data} /> */}
+        <Card data={iphoneProducts.data} />
+      </div>
+
+      <div>
+        <div className="flex justify-between">
+          <h1 className="text-xl font-bold">Hp Laptops</h1>
+          <Link to="/laptops/hp" className="underline">
+            See All
+          </Link>
+        </div>
+        <Card data={hpProducts.data} />
+      </div>
+
+      <div>
+        <div className="flex justify-between">
+          <h1 className="text-xl font-bold">Apple Laptops</h1>
+          <Link to="/laptops/macbook" className="underline">
+            See All
+          </Link>
+        </div>
+        <Card data={macProducts.data} />
       </div>
       {/* <Footer /> */}
     </section>

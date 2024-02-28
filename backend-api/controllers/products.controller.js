@@ -70,17 +70,30 @@ export const getProductById = async (req, res, next) => {
     }
 };
 
+export const getProductsByBrandWithLimit = async (req, res, next) => {
+  try {
+    const limit = req.query.limit || 5;
+    const brand = req.query.brand;
+
+    const allProducts = await Product.find(brand)
+      .limit(limit);
+
+    return res.status(200).json(allProducts);
+  } catch (err) {
+    next(err);
+  }
+};
 
 
 export const getAllProducts = async (req, res, next) => {
     try {
-        const limit = req.query.limit || 2;
-        const page = req.query.page || 0;
+        const limit = parseInt(req.query.limit,10 )|| 10;
+        // const page = parseInt(req.query.page, 10) || 0;
 
          const sort = req.query.sort || "createdAt";
         const order = req.query.order || "desc";
         
-        const allProducts = await Product.find({}).sort({[sort]: order}).limit(limit).skip(page);
+        const allProducts = await Product.find({}).limit(limit);
         
         return res.status(200).json(allProducts);
     } catch (err) {

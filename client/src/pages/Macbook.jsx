@@ -10,7 +10,7 @@ const Macbook = () => {
    });
 
    if (isLoading) {
-     return <p>Loading...</p>;
+     return <p className="text-center">Loading...</p>;
    }
 
    if (isError) {

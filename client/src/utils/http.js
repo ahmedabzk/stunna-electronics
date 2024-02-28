@@ -137,6 +137,23 @@ export const fetchProductsByBrand = async (brand) => {
   return products;
 };
 
+
+export const fetchProductsByBrandWithLimit = async (brand) => {
+  const res = await fetch(`http://localhost:3000/api/v1/product/get/brand?${brand}`);
+
+  if (!res.ok) {
+    const error = new Error("failed to fetch different items");
+    error.code = res.statusCode;
+    error.info = await res.json();
+    throw error;
+  }
+
+  const products = await res.json();
+  console.log(products);
+
+  return products;
+};
+
 export const fetchProductsByCategory = async (category) => {
   const res = await fetch(`http://localhost:3000/api/v1/product/get/${category}`);
 

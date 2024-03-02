@@ -139,7 +139,7 @@ export const fetchProductsByBrand = async (brand) => {
 
 
 export const fetchProductsByBrandWithLimit = async (brand) => {
-  const res = await fetch(`http://localhost:3000/api/v1/product/get/brand?${brand}`);
+  const res = await fetch(`http://localhost:3000/api/v1/product/get/brand?brand=${brand}`);
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");

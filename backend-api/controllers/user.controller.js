@@ -8,7 +8,6 @@ import User from "../models/user.model.js"
 
 
 export const updateUserById = async (req, res, next) => {
-    console.log(req.params);
     if (req.user.id === req.params.id) {
         try {
             if (req.body.password) {

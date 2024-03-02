@@ -71,7 +71,7 @@ export const getProductsByBrandWithLimit = async (req, res, next) => {
     const limit = req.query.limit || 5;
     const brand = req.query.brand;
 
-    const allProducts = await Product.find(brand).limit(limit);
+    const allProducts = await Product.find({brand: brand}).limit(limit);
 
     return res.status(200).json(allProducts);
   } catch (err) {

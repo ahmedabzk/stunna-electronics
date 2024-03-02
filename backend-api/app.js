@@ -10,6 +10,7 @@ import authRouter from "./routes/auth.routes.js";
 import productRouter from "./routes/product.routes.js";
 import userRouter from "./routes/users.routes.js";
 import stripeRouter from "./routes/stripe.routes.js";
+import orderRouter from "./routes/order.routes.js";
 import adminRouter from "./routes/admin/admin.routes.js";
 
 dotenv.config();
@@ -45,7 +46,8 @@ app.use(
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1/stripe",stripeRouter);
+app.use("/api/v1/stripe", stripeRouter);
+app.use("/api/v1/order", orderRouter);
 app.use("/api/v1/admin", adminRouter);
 
 app.use(express.static(path.join(__dirname, "client/dist")));

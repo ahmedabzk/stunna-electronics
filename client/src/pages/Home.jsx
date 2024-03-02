@@ -12,22 +12,76 @@ import PhoneLogo from "../assets/phone.webp";
 function Home() {
   const samsungProducts = useQuery({
     queryKey: ["samsung"],
-    queryFn: () => fetchProductsByBrandWithLimit("samsung"),
+    queryFn: async () => {
+      const res = await fetch(
+        "http://localhost:3000/api/v1/product/get/brand?brand=samsung"
+      );
+      if (!res.ok) {
+        const error = new Error("failed to fetch different items");
+        error.code = res.statusCode;
+        error.info = await res.json();
+        throw error;
+      }
+
+      const product = await res.json();
+      return product;
+    }
   });
+
 
   const iphoneProducts = useQuery({
     queryKey: ["iphone"],
-    queryFn: () => fetchProductsByBrandWithLimit("iphone"),
+    queryFn: async () => {
+      const res = await fetch(
+        "http://localhost:3000/api/v1/product/get/brand?brand=iphone"
+      );
+      if (!res.ok) {
+        const error = new Error("failed to fetch different items");
+        error.code = res.statusCode;
+        error.info = await res.json();
+        throw error;
+      }
+
+      const product = await res.json();
+      console.log(product);
+      return product;
+    },
   });
 
   const macProducts = useQuery({
-    queryKey: ["samsung"],
-    queryFn: () => fetchProductsByBrandWithLimit("hp"),
+    queryKey: ["macbook"],
+    queryFn: async () => {
+      const res = await fetch(
+        "http://localhost:3000/api/v1/product/get/brand?brand=macbook"
+      );
+      if (!res.ok) {
+        const error = new Error("failed to fetch different items");
+        error.code = res.statusCode;
+        error.info = await res.json();
+        throw error;
+      }
+
+      const product = await res.json();
+      return product;
+    },
   });
 
   const hpProducts = useQuery({
-    queryKey: ["iphone"],
-    queryFn: () => fetchProductsByBrandWithLimit("macbook"),
+    queryKey: ["hp"],
+    queryFn: async () => {
+      const res = await fetch(
+        "http://localhost:3000/api/v1/product/get/brand?brand=hp"
+      );
+      if (!res.ok) {
+        const error = new Error("failed to fetch different items");
+        error.code = res.statusCode;
+        error.info = await res.json();
+        throw error;
+      }
+
+      const product = await res.json();
+      return product;
+    },
   });
 
   if (samsungProducts.isPending && iphoneProducts.isPending && hpProducts.isPending && macProducts.isPending) {

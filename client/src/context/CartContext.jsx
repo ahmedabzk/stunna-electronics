@@ -32,24 +32,17 @@ function cartReducer(state, action) {
       };
       updatedProducts[existingCartItemIndex] = updatedProduct;
     } else {
-      //  if (selectedColor) {
-      //    product.colors = selectedColor;
-      //  }
-      //  product.selectedColor = product.colors[0];
-      // window.alert("Select a color");
-
       const {
-        maxQuantity: maxQuantity,
-        createdAt: createdAt,
-        sizes: sizes,
-        updatedAt: updatedAt,
-        colors: colors,
-        description: description,
-        storage: storage,
+        maxQuantity,
+        createdAt,
+        updatedAt,
+        colors,
+        description,
+        storage,
         ...rest
       } = product;
-     
-      updatedProducts.push({ ...rest, quantity: 1, selectedColor, size});
+     const images = rest.images[0];
+      updatedProducts.push({ ...rest, quantity: 1,images, selectedColor, size});
     }
 
     return { ...state, products: updatedProducts };

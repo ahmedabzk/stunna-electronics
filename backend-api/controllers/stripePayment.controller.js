@@ -116,7 +116,7 @@ const createOrder = async (customer, data) => {
       quantity: item.quantity,
       price: item.price,
       color: item.selectedColor,
-      image: item.images[0]
+      image: item.images
     };
   });
 
@@ -134,7 +134,6 @@ const createOrder = async (customer, data) => {
     const savedOrder = await newOrder.save();
     console.log("Processed Order");
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
@@ -150,13 +149,12 @@ export const webhookFunc = async (req, res, next) => {
        signature,
        process.env.ENDPOINTSECRET
      );
-   } catch (err) {
-     console.log(err.message);
+   } catch (err){
      res.status(400).send(`Webhook Error: ${err.message}`);
      return;
    }
 
-
+  console.log(event.type);
   if (event.type === "checkout.session.completed") {
     let data = event.data.object;
     

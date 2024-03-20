@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import Card from "../components/Card";
 import { useLocation } from "react-router-dom";
+import Loader from "../components/Loader";
 
 function Search() {
    const location = useLocation();
@@ -36,7 +37,7 @@ function Search() {
   }, [searchQuery, refetch]);
 
   if (isLoading) {
-    return <p className="text-center">Loading...</p>;
+    return <Loader/>;
   }
 
   if (isError) {

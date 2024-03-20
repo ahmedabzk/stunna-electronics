@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProductsByBrand } from "../utils/http";
 
 import Card from "../components/Card";
+import Loader from "../components/Loader";
 
 const Samsung = () => {
   const { data, isError, error, isLoading } = useQuery({
@@ -10,7 +11,7 @@ const Samsung = () => {
   });
 
   if (isLoading) {
-    return <p className="text-center">Loading...</p>;
+    return <Loader/>;
   }
 
   if (isError) {

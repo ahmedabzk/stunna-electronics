@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import Laptops from "../assets/laptop.webp";
 import PhoneLogo from "../assets/phone.webp";
+import Loader from "../components/Loader";
 
 
 function Home() {
@@ -43,7 +44,6 @@ function Home() {
       }
 
       const product = await res.json();
-      console.log(product);
       return product;
     },
   });
@@ -85,7 +85,7 @@ function Home() {
   });
 
   if (samsungProducts.isPending && iphoneProducts.isPending && hpProducts.isPending && macProducts.isPending) {
-    return <p className="text-center">Loading Products ...</p>;
+    return <Loader/>;
   }
   if (samsungProducts.isError && iphoneProducts.isError && hpProducts.isError && macProducts.isError) {
     return (

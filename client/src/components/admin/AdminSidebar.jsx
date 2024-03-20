@@ -80,7 +80,7 @@ function AdminSidebar() {
               Create Product
             </MenuItem>
           </SubMenu>
-          <MenuItem icon={<ShoppingCartRoundedIcon />}>Orders</MenuItem>
+          <MenuItem icon={<ShoppingCartRoundedIcon />} component={<Link to="/admin/orders"/>}>Orders</MenuItem>
           <MenuItem icon={<ReceiptRoundedIcon />}>Sales</MenuItem>
           <MenuItem
             icon={<PeopleOutlinedIcon />}

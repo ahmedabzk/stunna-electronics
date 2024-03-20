@@ -132,7 +132,6 @@ const createOrder = async (customer, data) => {
 
   try {
     const savedOrder = await newOrder.save();
-    console.log("Processed Order");
   } catch (err) {
     next(err);
   }

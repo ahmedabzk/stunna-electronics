@@ -3,6 +3,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchAllProducts } from "../../utils/http";
+import Loader from "../../components/Loader";
 
 const columns = [
   {
@@ -73,7 +74,7 @@ function Products() {
   });
 
   if (isLoading) {
-    return <p className="text-center">Loading...</p>;
+    return <Loader/>;
   }
   if (isError) {
     return <p>{error.info?.message}</p>;

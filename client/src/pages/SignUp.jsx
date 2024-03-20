@@ -9,8 +9,6 @@ import { register } from "../utils/http";
 
 
 
-
-
 function SignUp() {
   const [formData, setFormData] = useState({});
 

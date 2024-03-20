@@ -5,7 +5,7 @@ import {
   Home, Shop, About, SignIn, SignUp, ForgetPassword,
   Product, CheckOut, SuccessPayment, Profile, NotFound,Search, Phones, Samsung, Iphone, Laptops, Hp, Macbook
 } from "./pages";
-import {AdminHome, CreateItem, EditItem,DeleteItem,AdminDashboard, Products} from  './pages/admin'
+import {AdminHome, CreateItem, EditItem,DeleteItem,AdminDashboard, Products, Orders} from  './pages/admin'
 
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
 import EditAccount from "./components/EditAccount.jsx";
@@ -50,6 +50,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/products" element={<Products />} />
       <Route path="/admin/products/create-product" element={<CreateItem />} />
+      <Route path="/admin/orders" element={<Orders />} />
       <Route
         path="/admin/products/delete/:productId"
         element={<DeleteItem />}

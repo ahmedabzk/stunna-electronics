@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { fetchAllUsers } from "../../utils/http";
+import Loader from "../../components/Loader";
 
 const columns = [
   {
@@ -49,7 +50,7 @@ function Customers() {
   });
 
   if (isLoading) {
-    return <p className="text-center">Loading...</p>;
+    return <Loader/>;
   }
   if (isError) {
     return <p>{error.info?.message}</p>;

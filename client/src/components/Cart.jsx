@@ -69,7 +69,7 @@ function Cart() {
               </p>
             </div>
             {userCtx.current_user? (
-              <PayButton cartItems={cartCtx.products} />
+              <PayButton cartItems={cartCtx.products} handleClear={handleClear} />
             ) : (
                 <button className="cart-login" onClick={() => { navigate("/sign-in"); handleClose() }}>
                 Login to Check out

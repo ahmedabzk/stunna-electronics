@@ -81,15 +81,24 @@ export const getProductsByBrandWithLimit = async (req, res, next) => {
 
 export const getAllProducts = async (req, res, next) => {
   try {
-    const limit = parseInt(req.query.limit, 10) || 10;
-    // const page = parseInt(req.query.page, 10) || 0;
+    const page = parseInt(req.query.page);
+    const pageSize = parseInt(req.query.pageSize);
 
-    const sort = req.query.sort || "createdAt";
-    const order = req.query.order || "desc";
+    // Calculate the start and end indexes for the requested page
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
 
-    const allProducts = await Product.find({}).limit(limit);
+    const allProducts = await Product.find({}).sort({_id: 1});
+    
+    // Slice the products array based on the indexes
+    const paginatedProducts = allProducts.slice(startIndex, endIndex);
+  
 
-    return res.status(200).json(allProducts);
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(allProducts.length / pageSize);
+
+    // Send the paginated products and total pages as the API response
+      return res.json({ products: paginatedProducts, totalPages });
   } catch (err) {
     next(err);
   }

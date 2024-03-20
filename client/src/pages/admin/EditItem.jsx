@@ -10,6 +10,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../../firebase";
+import Loader from "../../components/Loader";
 
 function EditItem() {
   const params = useParams();
@@ -138,7 +139,7 @@ function EditItem() {
     }; 
 
     if (isLoading) {
-      return <p className="text-center">Loading...</p>;
+      return <Loader />;
     }
 
     if (isError) {

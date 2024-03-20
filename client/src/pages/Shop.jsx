@@ -1,66 +1,48 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
+
+import { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import { formatter } from "../utils/formatter";
-
-
-const fetchProducts = async ({ pageParam = 10 }) => {
-  const res = await fetch(
-    `http://localhost:3000/api/v1/product/get/all?limit=${pageParam}`
-  );
-  const data = res.json();
-  return data;
-};
-
-
+import Loader from "../components/Loader";
 
 function Shop() {
-  // const { ref, inView } = useInView();
+  const [loading, setLoading] = useState(false);
+  const [listings, setListings] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
-  
+  const fetchListings = async (page) => {
+    setLoading(true);
+    const res = await fetch(
+      `http://localhost:3000/api/v1/product/get/all?page=${page}&pageSize=10`
+    );
+    const data = await res.json();
+    const { products, totalPages } = data;
+    setListings(products);
+    setTotalPages(totalPages);
+    setLoading(false);
+  };
 
+  useEffect(() => {
+    fetchListings(currentPage);
+  }, [currentPage]);
 
-  const {
-    data,
-    status,
-    error,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage } = useInfiniteQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
-      initialPageParam: 10,
-    refetchOnWindowFocus: false,
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = lastPage.length ? allPages.length + 1 : undefined;
-      return nextPage;
-    },
-  });
+  const onShowMoreClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-
-  //  useEffect(() => {
-  //    if (inView && hasNextPage) {
-  //      console.log("Fire!");
-  //      fetchNextPage();
-  //    }
-  //  }, [inView, hasNextPage, fetchNextPage]);
-
-   if (status === "pending") {
-     return <p>Loading...</p>;
-   }
-
-   if (status === "error") {
-     return <p>Error: {error.message}</p>;
-   }
-  
-
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <section className="mt-8 md:max-w-[1800px] mx-auto flex flex-col gap-8 items-center -z-30">
+      
       <div className="flex justify-center items-start gap-5 flex-wrap h-auto">
-        {data?.pages.map((products) =>
-          products.map((product) => (
+        {!loading &&
+          listings &&
+          listings.map((product) => (
             <div
               key={product._id}
               className="relative flex bg-clip-border rounded-xl bg-white text-gray-700 shadow-md w-full max-w-[48rem] flex-row"
@@ -93,33 +75,26 @@ function Shop() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
-                    class="w-4 h-4"
+                    strokeWidth="2"
+                    className="w-4 h-4"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                     ></path>
                   </svg>
                 </Link>
               </div>
             </div>
-          ))
-        )}
+          ))}
       </div>
 
       <button
-        // ref={ref}
+        onClick={onShowMoreClick}
         className="bg-black text-white w-fit p-2 rounded-md mb-3 transition-all hover:bg-slate-700"
-        disabled={!hasNextPage || isFetchingNextPage}
-        onClick={() => fetchNextPage()}
       >
-        {isFetchingNextPage
-          ? "Loading more..."
-          : hasNextPage
-          ? "Load More"
-          : "Nothing more to load"}
+        {currentPage !== totalPages ? "Load more" : "Nothing more to load"}
       </button>
     </section>
   );

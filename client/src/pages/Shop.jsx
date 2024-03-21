@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { formatter } from "../utils/formatter";
 import Loader from "../components/Loader";
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+
 function Shop() {
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
@@ -13,7 +15,7 @@ function Shop() {
   const fetchListings = async (page) => {
     setLoading(true);
     const res = await fetch(
-      `http://localhost:3000/api/v1/product/get/all?page=${page}&pageSize=10`
+      `${server_url}/api/v1/product/get/all?page=${page}&pageSize=10`
     );
     const data = await res.json();
     const { products, totalPages } = data;

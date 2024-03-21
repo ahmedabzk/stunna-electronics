@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+
 function MyOrders() {
   const userCtx = useContext(UserContext);
 
@@ -12,7 +14,7 @@ function MyOrders() {
   const {data, isLoading, isError, error } = useQuery({
     queryKey: ['orders'],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/api/v1/order/get/order/${id}`, {
+      const res = await fetch(`${server_url}/api/v1/order/get/order/${id}`, {
         headers: { 'Content-Type': 'application/json'},
         'credentials': "include",
       });

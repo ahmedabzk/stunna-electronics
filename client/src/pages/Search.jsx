@@ -4,6 +4,8 @@ import Card from "../components/Card";
 import { useLocation } from "react-router-dom";
 import Loader from "../components/Loader";
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+
 function Search() {
    const location = useLocation();
    const urlParams = new URLSearchParams(location.search);
@@ -12,7 +14,7 @@ function Search() {
 
   const fetchSearchedData = async () => {
     const res = await fetch(
-      `http://localhost:3000/api/v1/product/get/search?searchTerm=${schQuery}`
+      `${server_url}/api/v1/product/get/search?searchTerm=${schQuery}`
     );
 
     if (!res.ok) {

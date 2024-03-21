@@ -22,6 +22,7 @@ import Loader from "../../components/Loader";
   //   payment_status: { type: String, required: true },
   // },
 
+  const server_url = import.meta.env.VITE_SERVER_URL;
 
 const orders = [
   {
@@ -75,7 +76,7 @@ function Orders() {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['orders'],
         queryFn: async () => {
-            const res = await fetch("http://localhost:3000/api/v1/admin/orders/all");
+            const res = await fetch(`${server_url}/api/v1/admin/orders/all`);
             if (!res.ok) {
                 const error = new Error("failed to update user profile");
                 error.code = res.statusCode;

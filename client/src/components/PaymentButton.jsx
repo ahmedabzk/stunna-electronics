@@ -4,13 +4,14 @@ import axios from "axios";
 
 import { useContext } from "react";
 
+const server_url = import.meta.env.VITE_SERVER_URL;
 
 const PayButton = ({ cartItems,handleClear }) => {
     const userCtx = useContext(UserContext);
   
   const handleCheckout = () => {
     axios
-        .post("http://localhost:3000/api/v1/stripe/create-checkout-session", {
+        .post(`${server_url}/api/v1/stripe/create-checkout-session`, {
             cartItems,
             userId: userCtx.current_user._id,
       })

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 
-import { fetchProductsByBrandWithLimit } from "../utils/http";
+
 import Card from "../components/Card";
 import { Link } from "react-router-dom";
 
@@ -10,12 +10,15 @@ import PhoneLogo from "../assets/phone.webp";
 import Loader from "../components/Loader";
 
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+console.log(server_url);
+
 function Home() {
   const samsungProducts = useQuery({
     queryKey: ["samsung"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3000/api/v1/product/get/brand?brand=samsung"
+        `${server_url}/api/v1/product/get/brand?brand=samsung`
       );
       if (!res.ok) {
         const error = new Error("failed to fetch different items");
@@ -34,7 +37,7 @@ function Home() {
     queryKey: ["iphone"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3000/api/v1/product/get/brand?brand=iphone"
+        `${server_url}/api/v1/product/get/brand?brand=iphone`
       );
       if (!res.ok) {
         const error = new Error("failed to fetch different items");
@@ -52,7 +55,7 @@ function Home() {
     queryKey: ["macbook"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3000/api/v1/product/get/brand?brand=macbook"
+        `${server_url}/api/v1/product/get/brand?brand=macbook`
       );
       if (!res.ok) {
         const error = new Error("failed to fetch different items");
@@ -70,7 +73,7 @@ function Home() {
     queryKey: ["hp"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3000/api/v1/product/get/brand?brand=hp"
+        `${server_url}/api/v1/product/get/brand?brand=hp`
       );
       if (!res.ok) {
         const error = new Error("failed to fetch different items");

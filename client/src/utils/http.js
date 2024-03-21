@@ -2,8 +2,11 @@ import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+console.log(server_url);
+
 export const fetchData = async (url) => {
-  const res = await fetch(`http://localhost:3000/api/v1/product/get/${url}`);
+  const res = await fetch(`${server_url}/api/v1/product/get/${url}`);
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");
@@ -18,7 +21,7 @@ export const fetchData = async (url) => {
 };
 
 export const register = async (formData) => {
-  const res = await fetch("http://localhost:3000/api/v1/auth/sign-up", {
+  const res = await fetch(`${server_url}/api/v1/auth/sign-up`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -38,7 +41,7 @@ export const register = async (formData) => {
 };
 
 export const fetchLogin = async (formData) => {
-  const res = await fetch("http://localhost:3000/api/v1/auth/sign-in", {
+  const res = await fetch(`${server_url}/api/v1/auth/sign-in`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -59,7 +62,7 @@ export const fetchLogin = async (formData) => {
 };
 
  export const fetchLogOut = async () => {
-   const res = await fetch("http://localhost:3000/api/v1/auth/logout", {
+   const res = await fetch(`${server_url}/api/v1/auth/logout`, {
      method: "POST",
      headers: {
        "content-type": "application/json",
@@ -79,13 +82,13 @@ export const fetchLogin = async (formData) => {
  }
 
 export const UpdateUserProfile = async (id, formData) => {
-  const res = await fetch(`http://localhost:3000/api/v1/user/update/${id}`, {
-    method: 'POST',
+  const res = await fetch(`${server_url}/api/v1/user/update/${id}`, {
+    method: "POST",
     headers: {
-      'content-type': 'application/json'
+      "content-type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(formData)
+    body: JSON.stringify(formData),
   });
 
   if (!res.ok) {
@@ -103,7 +106,7 @@ export const UpdateUserProfile = async (id, formData) => {
 }
 
 export const createProduct = async (formData) => {
-  const res = await fetch("http://localhost:3000/api/v1/admin/create/product", {
+  const res = await fetch(`${server_url}/api/v1/admin/create/product`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -122,7 +125,7 @@ export const createProduct = async (formData) => {
 };
 
 export const fetchProductsByBrand = async (brand) => {
-  const res = await fetch(`http://localhost:3000/api/v1/product/get/${brand}`);
+  const res = await fetch(`${server_url}/api/v1/product/get/${brand}`);
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");
@@ -139,7 +142,9 @@ export const fetchProductsByBrand = async (brand) => {
 
 
 export const fetchProductsByBrandWithLimit = async (brand) => {
-  const res = await fetch(`http://localhost:3000/api/v1/product/get/brand?brand=${brand}`);
+  const res = await fetch(
+    `${server_url}/api/v1/product/get/brand?brand=${brand}`
+  );
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");
@@ -155,7 +160,7 @@ export const fetchProductsByBrandWithLimit = async (brand) => {
 };
 
 export const fetchProductsByCategory = async (category) => {
-  const res = await fetch(`http://localhost:3000/api/v1/product/get/${category}`);
+  const res = await fetch(`${server_url}/api/v1/product/get/${category}`);
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");
@@ -171,7 +176,7 @@ export const fetchProductsByCategory = async (category) => {
 
 
 export const fetchAllProducts = async () => {
-  const res = await fetch("http://localhost:3000/api/v1/admin/products/all");
+  const res = await fetch(`${server_url}/api/v1/admin/products/all`);
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");
@@ -186,7 +191,7 @@ export const fetchAllProducts = async () => {
 };
 
 export const editProduct = async (id, formData) => {
-  const res = await fetch(`http://localhost:3000/api/v1/admin/products/update/${id}`, {
+  const res = await fetch(`${server_url}/api/v1/admin/products/update/${id}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -208,8 +213,8 @@ export const editProduct = async (id, formData) => {
 };
 
 export const getProductById = async (id) => {
-  const res = await fetch(`http://localhost:3000/api/v1/admin/products/${id}`, {
-    credentials: "include"
+  const res = await fetch(`${server_url}/api/v1/admin/products/${id}`, {
+    credentials: "include",
   });
 
   if (!res.ok) {
@@ -225,8 +230,8 @@ export const getProductById = async (id) => {
 };
 
 export const deleteProduct = async (id) => {
-  const res = await fetch(`http://localhost:3000/api/v1/admin/products/delete/${id}`, {
-    method: 'DELETE'
+  const res = await fetch(`${server_url}/api/v1/admin/products/delete/${id}`, {
+    method: "DELETE",
   });
 
   if (!res.ok) {
@@ -242,7 +247,7 @@ export const deleteProduct = async (id) => {
 };
 
 export const fetchAllUsers = async () => {
-  const res = await fetch("http://localhost:3000/api/v1/admin/users/all");
+  const res = await fetch(`${server_url}/api/v1/admin/users/all`);
 
   if (!res.ok) {
     const error = new Error("failed to fetch different items");

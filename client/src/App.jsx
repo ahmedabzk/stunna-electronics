@@ -2,8 +2,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 
 import {
-  Home, Shop, About, SignIn, SignUp, ForgetPassword,
-  Product, CheckOut, SuccessPayment, Profile, NotFound,Search, Phones, Samsung, Iphone, Laptops, Hp, Macbook
+  Home, Shop, About, SignIn, SignUp, ForgetPassword,CheckOut, SuccessPayment, Profile, NotFound,Search, Phones, Samsung, Iphone, Laptops, Hp, Macbook,ProductDetails
 } from "./pages";
 import {AdminHome, CreateItem, EditItem,DeleteItem,AdminDashboard, Products, Orders} from  './pages/admin'
 
@@ -35,7 +34,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/about" element={<About />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/search" element={<Search />} />
-      <Route path="/product/:productId" element={<Product />} />
+      <Route path="/product/:productId" element={<ProductDetails />} />
       <Route element={<ProtectedRoutes />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/edit-account" element={<EditAccount />} />

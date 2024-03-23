@@ -3,26 +3,25 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 import Loader from "../../components/Loader";
 
-
 //    userId: { type: String, required: true },
-  //   products: [
-  //     {
-  //       productId: { type: String },
-  //       quantity: { type: Number, default: 1 },
-  //       name: { type: String, required: true },
-  //       brand: { type: String, required: true },
-  //       price: { type: Number, required: true },
-  //       color: { type: String, required: true },
-  //       image: { type: String, required: true },
-  //     },
-  //   ],
-  //   amountPaid: { type: Number, required: true },
-  //   shipping: { type: Object, required: true },
-  //   delivery_status: { type: String, default: "pending" },
-  //   payment_status: { type: String, required: true },
-  // },
+//   products: [
+//     {
+//       productId: { type: String },
+//       quantity: { type: Number, default: 1 },
+//       name: { type: String, required: true },
+//       brand: { type: String, required: true },
+//       price: { type: Number, required: true },
+//       color: { type: String, required: true },
+//       image: { type: String, required: true },
+//     },
+//   ],
+//   amountPaid: { type: Number, required: true },
+//   shipping: { type: Object, required: true },
+//   delivery_status: { type: String, default: "pending" },
+//   payment_status: { type: String, required: true },
+// },
 
-  const server_url = import.meta.env.VITE_SERVER_URL;
+const server_url = import.meta.env.VITE_SERVER_URL;
 
 const orders = [
   {
@@ -69,58 +68,59 @@ const orders = [
   },
 ];
 
-
 function Orders() {
-    // const [orderData, setOrderData] = useState([]);
+  // const [orderData, setOrderData] = useState([]);
 
-    const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['orders'],
-        queryFn: async () => {
-            const res = await fetch(`${server_url}/api/v1/admin/orders/all`);
-            if (!res.ok) {
-                const error = new Error("failed to update user profile");
-                error.code = res.statusCode;
-                error.info = await res.json();
-                throw error;
-            }
-            
-            const data = res.json();
-            return data;
-        }
-    });
-  
-     if (isLoading) {
-       return <Loader/>;
-     }
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const res = await fetch(`${server_url}/api/v1/admin/orders/all`);
+      if (!res.ok) {
+        const error = new Error("failed to update user profile");
+        error.code = res.statusCode;
+        error.info = await res.json();
+        throw error;
+      }
 
-     if (isError) {
-       return <p>{error.info?.message}</p>;
-     }
-    console.log(data);
-    return (
-      <div className="w-[70%] h-full flex flex-col">
-        <h1 className="text-center mt-2 text-slate-500 font-semibold">Users</h1>
-        <div className="mt-4">
-          <DataGrid
-            rows={data}
-            columns={orders}
-            getRowId={(row) => row._id}
-            pageSize={10}
-            slots={{ toolbar: GridToolbar }}
-            showCellVerticalBorder={true}
-            sx={{
-              boxShadow: 2,
-              border: 2,
+      const data = res.json();
+      return data;
+    },
+  });
 
-              borderColor: "darkcyan",
-              "& .MuiDataGrid-cell:hover": {
-                color: "firebrick",
-              },
-            }}
-          />
-        </div>
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  console.log("products ", data);
+
+  if (isError) {
+    return <p>{error.info?.message}</p>;
+  }
+  console.log(data);
+  return (
+    <div className="w-[70%] h-full flex flex-col">
+      <h1 className="text-center mt-2 text-slate-500 font-semibold">Users</h1>
+      <div className="mt-4">
+        <DataGrid
+          rows={data}
+          columns={orders}
+          getRowId={(row) => row._id}
+          pageSize={10}
+          slots={{ toolbar: GridToolbar }}
+          showCellVerticalBorder={true}
+          sx={{
+            boxShadow: 2,
+            border: 2,
+
+            borderColor: "darkcyan",
+            "& .MuiDataGrid-cell:hover": {
+              color: "firebrick",
+            },
+          }}
+        />
       </div>
-    );
+    </div>
+  );
 }
 
-export default Orders
+export default Orders;

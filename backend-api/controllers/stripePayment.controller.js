@@ -132,6 +132,7 @@ const createOrder = async (customer, data) => {
 
   try {
     const savedOrder = await newOrder.save();
+    console.log(savedOrder);
   } catch (err) {
     next(err);
   }
@@ -155,6 +156,7 @@ export const webhookFunc = async (req, res, next) => {
 
   console.log(event.type);
   if (event.type === "checkout.session.completed") {
+    console.log(event.type);
     let data = event.data.object;
     
        stripe.customers
